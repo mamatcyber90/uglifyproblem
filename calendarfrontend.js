@@ -24,12 +24,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }
         return result;
     }), window.atob || (window.atob = function(string) {
-        string = string.replace(/=+$/, "");
-        var a, b, b1, b2, b3, b4, c, i = 0, len = string.length, chars = [];
+        var a, b, b2, b3, c, i = 0, len = (string = string.replace(/=+$/, "")).length, chars = [];
         if (len % 4 == 1) throw INVALID_CHARACTER_ERR;
-        for (;i < len; ) b1 = characters.indexOf(string.charAt(i++)), b2 = characters.indexOf(string.charAt(i++)), 
-        b3 = characters.indexOf(string.charAt(i++)), b4 = characters.indexOf(string.charAt(i++)), 
-        a = (63 & b1) << 2 | b2 >> 4 & 3, b = (15 & b2) << 4 | b3 >> 2 & 15, c = (3 & b3) << 6 | 63 & b4, 
+        for (;i < len; ) a = (63 & characters.indexOf(string.charAt(i++))) << 2 | (b2 = characters.indexOf(string.charAt(i++))) >> 4 & 3, 
+        b = (15 & b2) << 4 | (b3 = characters.indexOf(string.charAt(i++))) >> 2 & 15, c = (3 & b3) << 6 | 63 & characters.indexOf(string.charAt(i++)), 
         chars.push(fromCharCode(a)), b && chars.push(fromCharCode(b)), c && chars.push(fromCharCode(c));
         return chars.join("");
     });
@@ -714,7 +712,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var a;
                 if (e.packages[t]) {
                     var o = e.packages[t];
-                    a = e.packages[t] = {}, y(a, r ? n : o, t, e, r), y(a, r ? o : n, t, e, !r);
+                    y(a = e.packages[t] = {}, r ? n : o, t, e, r), y(a, r ? o : n, t, e, !r);
                 } else a = e.packages[t] = n;
                 return "object" == typeof a.main && (a.map = a.map || {}, a.map["./@main"] = a.main, 
                 a.main.default = a.main.default || "./", a.main = "@main"), a;
@@ -753,7 +751,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 if (!d(e)) throw new Error("Node module " + e + " can't be loaded as it is not a package require.");
                 if (!te) {
                     var n = this._nodeRequire("module"), r = t.substr(U ? 8 : 7);
-                    te = new n(r), te.paths = n._nodeModulePaths(r);
+                    (te = new n(r)).paths = n._nodeModulePaths(r);
                 }
                 return te.require(e);
             }
@@ -1032,14 +1030,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     if (!(--e.loadingCount > 0)) {
                         var n = e.startingLoad;
                         if (!1 === e.loader.loaderObj.execute) {
-                            for (var r = [].concat(e.loads), a = 0, o = r.length; o > a; a++) {
-                                var t = r[a];
-                                t.module = {
-                                    name: t.name,
-                                    module: w({}),
-                                    evaluated: !0
-                                }, t.status = "linked", h(e.loader, t);
-                            }
+                            for (var r = [].concat(e.loads), a = 0, o = r.length; o > a; a++) (t = r[a]).module = {
+                                name: t.name,
+                                module: w({}),
+                                evaluated: !0
+                            }, t.status = "linked", h(e.loader, t);
                             return e.resolve(n);
                         }
                         f(e) || e.resolve(n);
@@ -1350,19 +1345,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 if (e.defaultJSExtensions && (r.defaultJSExtensions = e.defaultJSExtensions, w.call(r, "The defaultJSExtensions configuration option is deprecated, use packages configuration instead.")), 
                 e.pluginFirst && (r.pluginFirst = e.pluginFirst), e.map) {
                     var i = "";
-                    for (var o in e.map) {
-                        s = e.map[o];
-                        if ("string" != typeof s) {
-                            i += (i.length ? ", " : "") + '"' + o + '"';
-                            var l = r.defaultJSExtensions && ".js" != o.substr(o.length - 3, 3), u = r.decanonicalize(o);
-                            l && ".js" == u.substr(u.length - 3, 3) && (u = u.substr(0, u.length - 3));
-                            var c = "";
-                            for (var f in r.packages) u.substr(0, f.length) == f && (!u[f.length] || "/" == u[f.length]) && c.split("/").length < f.split("/").length && (c = f);
-                            c && r.packages[c].main && (u = u.substr(0, u.length - r.packages[c].main.length - 1));
-                            f = r.packages[u] = r.packages[u] || {};
-                            f.map = s;
-                        } else r.map[o] = s;
-                    }
+                    for (var o in e.map) if ("string" != typeof (s = e.map[o])) {
+                        i += (i.length ? ", " : "") + '"' + o + '"';
+                        var l = r.defaultJSExtensions && ".js" != o.substr(o.length - 3, 3), u = r.decanonicalize(o);
+                        l && ".js" == u.substr(u.length - 3, 3) && (u = u.substr(0, u.length - 3));
+                        var c = "";
+                        for (var f in r.packages) u.substr(0, f.length) == f && (!u[f.length] || "/" == u[f.length]) && c.split("/").length < f.split("/").length && (c = f);
+                        c && r.packages[c].main && (u = u.substr(0, u.length - r.packages[c].main.length - 1)), 
+                        (f = r.packages[u] = r.packages[u] || {}).map = s;
+                    } else r.map[o] = s;
                     i && w.call(r, "The map configuration for " + i + ' uses object submaps, which is deprecated in global map.\nUpdate this to use package contextual map with configs like SystemJS.config({ packages: { "' + o + '": { map: {...} } } }).');
                 }
                 if (e.packageConfigPaths) {
@@ -1381,8 +1372,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 }
                 if (e.packages) for (var o in e.packages) {
                     if (o.match(/^([^\/]+:)?\/\/$/)) throw new TypeError('"' + o + '" is not a valid package name.');
-                    u = _.call(r, o);
-                    "/" == u[u.length - 1] && (u = u.substr(0, u.length - 1)), b(r, u, e.packages[o], !1);
+                    "/" == (u = _.call(r, o))[u.length - 1] && (u = u.substr(0, u.length - 1)), b(r, u, e.packages[o], !1);
                 }
                 for (var k in e) {
                     var s = e[k];
@@ -1580,7 +1570,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             var d = f(o, u), c = d && d.packageName || e(o, u);
                             if (!c) return Promise.resolve(u + (s ? ".js" : ""));
                             var p = o.packages[c];
-                            return (!p || !p.configured && d ? m(o, c, d.configPath) : Promise.resolve(p)).then(function(e) {
+                            return (p && (p.configured || !d) ? Promise.resolve(p) : m(o, c, d.configPath)).then(function(e) {
                                 var t = u.substr(c.length + 1);
                                 return l(o, e, c, t, a);
                             });
@@ -1768,7 +1758,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             if (-1 != J.call(t.normalizedDeps, o)) return d(o, r);
                             throw new Error("Module " + e + " not declared as a dependency of " + t.name);
                         }, a, o);
-                        f && (o.exports = f), a = o.exports, a && (a.__esModule || a instanceof n) ? t.esModule = r.newModule(a) : t.esmExports && a !== e ? t.esModule = r.newModule(p(a)) : t.esModule = r.newModule({
+                        f && (o.exports = f), (a = o.exports) && (a.__esModule || a instanceof n) ? t.esModule = r.newModule(a) : t.esmExports && a !== e ? t.esModule = r.newModule(p(a)) : t.esModule = r.newModule({
                             default: a
                         });
                     }
@@ -1931,9 +1921,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             return t(n.normalizeSync(e, r));
                         },
                         getPathVars: function(e) {
-                            var n, r = e.lastIndexOf("!");
-                            n = -1 != r ? e.substr(0, r) : e;
-                            var a = n.split("/");
+                            var n, r = e.lastIndexOf("!"), a = (n = -1 != r ? e.substr(0, r) : e).split("/");
                             return a.pop(), a = a.join("/"), {
                                 filename: t(n),
                                 dirname: t(a)
@@ -1948,8 +1936,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }), s(function(t) {
                 return function() {
                     function n(e, t) {
-                        e = e.replace(s, "");
-                        var r = (e.match(d)[1].split(",")[t] || "require").replace(c, ""), a = f[r] || (f[r] = new RegExp(l + r + u, "g"));
+                        var r = ((e = e.replace(s, "")).match(d)[1].split(",")[t] || "require").replace(c, ""), a = f[r] || (f[r] = new RegExp(l + r + u, "g"));
                         a.lastIndex = 0;
                         for (var o, i = []; o = a.exec(e); ) i.push(o[2] || o[3]);
                         return i;
@@ -2485,9 +2472,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             } catch (e2) {}
                         }
                         if (!xhr) throw new Error("Couldn't initialize an XMLHttpRequest object.");
-                        var fileNameMatch = (err.fileName || "").match(/^(?:https?:\/\/)(?:[^\/]+)(\/[^#]*)/);
-                        fileNameMatch = fileNameMatch ? fileNameMatch[1] : err.fileName;
-                        var filePosition = fileNameMatch + ":" + err.lineNumber, message = (err.message || err.customMessage) + " (" + filePosition + ")";
+                        var fileNameMatch = (err.fileName || "").match(/^(?:https?:\/\/)(?:[^\/]+)(\/[^#]*)/), filePosition = (fileNameMatch = fileNameMatch ? fileNameMatch[1] : err.fileName) + ":" + err.lineNumber, message = (err.message || err.customMessage) + " (" + filePosition + ")";
                         "Error" !== err.name && -1 === message.indexOf(err.name) && (message = err.name + ": " + message);
                         var now = new Date(), timestamp = now.getTime(), then = that.hash[message];
                         if (then && timestamp - then < 12e4) return void (that.hash[message] = timestamp);
@@ -2544,10 +2529,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     "function" == typeof handler && (oneTimeReadyStateChangeHandler = handler);
                 }, that.sendReportFromTraceKit = function(errorReport) {
                     var err, firstFrame = errorReport.stack && errorReport.stack.length > 0 ? errorReport.stack[0] : {};
-                    err = "[object Error]" === Object.prototype.toString.call(errorReport) ? errorReport : errorReport.error || function() {
+                    (err = "[object Error]" === Object.prototype.toString.call(errorReport) ? errorReport : errorReport.error || function() {
                         var e = new Error();
                         return e.message = errorReport.message, e;
-                    }(), err.fileName = firstFrame.url, err.lineNumber = firstFrame.line, err.pageName = errorReport.url, 
+                    }()).fileName = firstFrame.url, err.lineNumber = firstFrame.line, err.pageName = errorReport.url, 
                     err.sourceMappedStack = errorReport.sourceMappedStack, err.sourceMappedStackError = errorReport.sourceMappedStackError, 
                     that.sendReport(err);
                 };
@@ -2597,10 +2582,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     }
                 }
                 function traceKitWindowOnError(message, url, lineNo, columnNo, errorObj) {
-                    var stack = null;
                     if (lastExceptionStack) TraceKit.computeStackTrace.augmentStackTraceWithInitialElement(lastExceptionStack, url, lineNo, message), 
-                    processLastException(); else if (errorObj) stack = TraceKit.computeStackTrace(errorObj), 
-                    notifyHandlers(stack, !0); else {
+                    processLastException(); else if (errorObj) notifyHandlers(TraceKit.computeStackTrace(errorObj), !0); else {
                         var location = {
                             url: url,
                             line: lineNo,
@@ -2608,11 +2591,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         };
                         location.func = TraceKit.computeStackTrace.guessFunctionName(location.url, location.line), 
                         location.context = TraceKit.computeStackTrace.gatherContext(location.url, location.line), 
-                        stack = {
+                        notifyHandlers({
                             mode: "onerror",
                             message: message,
                             stack: [ location ]
-                        }, notifyHandlers(stack, !0);
+                        }, !0);
                     }
                     return !!_oldOnerrorHandler && _oldOnerrorHandler.apply(this, arguments);
                 }
@@ -2818,8 +2801,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             if (script) {
                                 var source = getSource(item.url);
                                 if (source) {
-                                    source = source.join("\n");
-                                    var pos = source.indexOf(script.innerText);
+                                    var pos = (source = source.join("\n")).indexOf(script.innerText);
                                     pos >= 0 && (item.line = relativeLine + source.substring(0, pos).split("\n").length);
                                 }
                             }
@@ -2975,8 +2957,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             formatDate: {
                 update: function(element, valueAccessor, allBindings) {
                     var date, options = ko.utils.unwrapObservable(valueAccessor()), dateFormat = "", tooltipDateFormat = "";
-                    options && "function" == typeof options.toJSDate ? dateFormat = getDateFormatFromContext("", date) : "[object Date]" === Object.prototype.toString.call(options) ? (date = options, 
-                    dateFormat = getDateFormatFromContext("", date)) : options.value && (date = ko.utils.unwrapObservable(options.value), 
+                    options && "function" == typeof options.toJSDate ? dateFormat = getDateFormatFromContext("", date) : "[object Date]" === Object.prototype.toString.call(options) ? dateFormat = getDateFormatFromContext("", date = options) : options.value && (date = ko.utils.unwrapObservable(options.value), 
                     options.formatId ? dateFormat = getDateFormatFromContext(options.formatId, date) : options.format && (dateFormat = options.format), 
                     options.tooltipFormatId && date ? tooltipDateFormat = getDateFormatFromContext(options.tooltipFormatId, date) : options.tooltipFormat && (tooltipDateFormat = options.tooltipFormat), 
                     tooltipDateFormat && date && element.setAttribute("data-title", inter.renderDateFormat(date, tooltipDateFormat)));
@@ -4229,8 +4210,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 return calendar.hasEventInstances(startDate, endDate);
             });
         }, Calendars.prototype.getEventInstances = function(startDate, endDate) {
-            var that = this, result = [];
-            return that.all().filter(function(calendar) {
+            var result = [];
+            return this.all().filter(function(calendar) {
                 return calendar.enabled();
             }).forEach(function(calendar) {
                 calendar.getEventInstances(startDate, endDate).forEach(function(eventInstance) {
@@ -4579,7 +4560,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var refreshTimer, calendars = that.state.calendars, agendaDays = ko.pureComputed(function() {
                 for (var result = [], currentDate = that.startDate().isDate ? that.startDate().clone().convertToZone(TimeZone.localTimeZone) : that.startDate().clone(); currentDate.compare(that.endDate()) < 0; ) {
                     var dayStart = currentDate.clone();
-                    result.push(dayStart), currentDate = currentDate.dayAfter(), currentDate = currentDate.convertToZone(TimeZone.localTimeZone);
+                    result.push(dayStart), currentDate = (currentDate = currentDate.dayAfter()).convertToZone(TimeZone.localTimeZone);
                 }
                 return result;
             });
@@ -5030,7 +5011,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     }), freqOption;
                 }, that.detectKeyCode = function(data, event) {
                     var key = window.event ? event.keyCode : event.which;
-                    return 8 === event.keyCode || 46 === event.keyCode || 37 === event.keyCode || 39 === event.keyCode || 65 === key && !0 === event.ctrlKey || !(key < 48 || key > 57) || !(key < 96 || key > 105);
+                    return 8 === event.keyCode || 46 === event.keyCode || 37 === event.keyCode || 39 === event.keyCode || 65 === key && !0 === event.ctrlKey || (!(key < 48 || key > 57) || !(key < 96 || key > 105));
                 };
                 var maxSafeInteger = Number.MAX_SAFE_INTEGER || 9007199254740991;
                 that.count.subscribe(numberWithMax(that.count, maxSafeInteger)), that.interval.subscribe(numberWithMax(that.interval, 30)), 
@@ -5801,9 +5782,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 } : ko.isObservable(config) && "string" == typeof config() ? config = {
                     template: config
                 } : config.hasOwnProperty("template") && (ko.isObservable(config.template) || (config.template = ko.observable(config.template))), 
-                config = ko.utils.extend(defaultConfiguration, config), config = configFixupPositioning(config), 
-                config = configFixupOpenState(config);
-                var popup = new Popup(element, bindingContext, config), popupReposition = popup.reposition.bind(popup);
+                config = ko.utils.extend(defaultConfiguration, config), config = configFixupPositioning(config);
+                var popup = new Popup(element, bindingContext, config = configFixupOpenState(config)), popupReposition = popup.reposition.bind(popup);
                 config.beforeOpen = config.beforeOpen.bind(popup), config.afterOpen = config.afterOpen.bind(popup), 
                 config.beforeClose = config.beforeClose.bind(popup), config.afterClose = config.afterClose.bind(popup);
                 var $element = $(element), insidePopupTemplate = !1;
@@ -5884,7 +5864,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }
             var datetime = (ko.isObservable(lastValidDate) ? lastValidDate() : lastValidDate).clone(), parts = text.split(/\D+/).filter(function(part) {
                 return part;
-            }), anteOrPostMeridiem = (text.toLowerCase().match(/am|pm/) || [])[0], clock12Hours = /h.* a/.test(inter.calendars.gregorian.dateFormats.basic.shortTime), hour = datetime.hour, minute = datetime.minute;
+            }), anteOrPostMeridiem = (text.toLowerCase().match(/am|pm/) || [])[0], shortTimeFormat = inter.calendars.gregorian.dateFormats.basic.shortTime, clock12Hours = /h.* a/.test(shortTimeFormat), hour = datetime.hour, minute = datetime.minute;
             if (0 === parts.length) return null;
             if (1 === parts.length) {
                 var timeString = parts[0];
@@ -6099,9 +6079,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 that.isAllDayEventWhenDateFieldsAreNotFilledIn(!isAllDayEvent);
                 var endDate, startDate, startDateClone, endDateClone;
                 isAllDayEvent ? !prevDates || that.startDate() && 0 !== prevDates.from.startOfDay().compare(that.startDate()) || that.endDate() && 0 !== prevDates.to.startOfDay().compare(that.endDate()) ? (startDate = that.startDate(), 
-                endDate = that.endDate(), startDate && (startDateClone = startDate.clone(), startDateClone.isDate = !1, 
-                startDateClone.hour = 9, that.startDate(startDateClone)), endDate && (endDateClone = endDate.clone(), 
-                endDateClone.isDate = !1, endDateClone.hour = 10, that.endDate(endDateClone))) : (that.startDate(prevDates.from), 
+                endDate = that.endDate(), startDate && ((startDateClone = startDate.clone()).isDate = !1, 
+                startDateClone.hour = 9, that.startDate(startDateClone)), endDate && ((endDateClone = endDate.clone()).isDate = !1, 
+                endDateClone.hour = 10, that.endDate(endDateClone))) : (that.startDate(prevDates.from), 
                 that.endDate(prevDates.to)) : (startDate = that.startDate(), endDate = that.endDate(), 
                 startDate && endDate ? (prevDates = {
                     from: startDate.clone(),
@@ -7451,10 +7431,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         }
                     },
                     "resize-right": function(e, draggedEvent, eventInfo, cursorDate) {
-                        cursorDate = cursorDate.convertToZone(TimeZone.localTimezone).startOfDay();
-                        var newDuration = cursorDate.subtractDate(draggedEvent.startDay());
-                        newDuration.days += 1, newDuration = Duration.fromSeconds(draggedEvent.duration().toSeconds() + newDuration.toSeconds() - draggedEvent.dayDuration().toSeconds()), 
-                        newDuration.toDays() >= 1 ? draggedEvent.duration(newDuration) : draggedEvent.newEvent && (draggedEvent.mode = "resize-left", 
+                        var newDuration = (cursorDate = cursorDate.convertToZone(TimeZone.localTimezone).startOfDay()).subtractDate(draggedEvent.startDay());
+                        newDuration.days += 1, (newDuration = Duration.fromSeconds(draggedEvent.duration().toSeconds() + newDuration.toSeconds() - draggedEvent.dayDuration().toSeconds())).toDays() >= 1 ? draggedEvent.duration(newDuration) : draggedEvent.newEvent && (draggedEvent.mode = "resize-left", 
                         newDuration = draggedEvent.startedAsDate.dayAfter().subtractDate(cursorDate), cursorDate = cursorDate.clone().convertToZone(that.state.timeZone()), 
                         draggedEvent.startDate(cursorDate), draggedEvent.duration(newDuration), (0, dragOverHandlers["all-day-event"]["resize-left"])(e, draggedEvent, eventInfo, cursorDate));
                     }
@@ -7468,8 +7446,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         var newDuration;
                         if (cursorDate.compare(draggedEvent.endDate()) <= 0) {
                             var endDate = draggedEvent.endDate();
-                            newDuration = endDate.subtractDate(cursorDate), newDuration = newDuration.compare(halfHour) < 0 ? halfHour : newDuration, 
-                            cursorDate = endDate.clone(), cursorDate.second -= newDuration.toSeconds(), draggedEvent.startDate(cursorDate), 
+                            newDuration = (newDuration = endDate.subtractDate(cursorDate)).compare(halfHour) < 0 ? halfHour : newDuration, 
+                            (cursorDate = endDate.clone()).second -= newDuration.toSeconds(), draggedEvent.startDate(cursorDate), 
                             draggedEvent.duration(newDuration);
                         } else if (draggedEvent.newEvent) {
                             draggedEvent.mode = "resize-bottom";
@@ -7479,8 +7457,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     },
                     "resize-bottom": function(e, draggedEvent, eventInfo, cursorDate) {
                         var newDuration;
-                        if (draggedEvent.startDate().compare(cursorDate) <= 0) newDuration = cursorDate.subtractDate(draggedEvent.startDate()), 
-                        newDuration = newDuration.compare(halfHour) < 0 ? halfHour : newDuration, draggedEvent.duration(newDuration); else if (draggedEvent.newEvent) {
+                        if (draggedEvent.startDate().compare(cursorDate) <= 0) newDuration = (newDuration = cursorDate.subtractDate(draggedEvent.startDate())).compare(halfHour) < 0 ? halfHour : newDuration, 
+                        draggedEvent.duration(newDuration); else if (draggedEvent.newEvent) {
                             draggedEvent.mode = "resize-top";
                             var newEndDate = draggedEvent.startedAsDate.clone();
                             newEndDate.addDuration(halfHour), newDuration = newEndDate.subtractDate(cursorDate), 
@@ -7852,7 +7830,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var o;
             "undefined" != typeof window ? o = window : "undefined" != typeof global ? o = global : "undefined" != typeof self && (o = self);
             var n = o;
-            n = n.com || (n.com = {}), n = n.one || (n.one = {}), n.greedyIntervalPacker = e();
+            (n = (n = n.com || (n.com = {})).one || (n.one = {})).greedyIntervalPacker = e();
         }
     }(function() {
         return function e(t, n, r) {
@@ -8378,8 +8356,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 "resize-right": function(e, draggedEvent, cursorDate) {
                     cursorDate = cursorDate.convertToZone(TimeZone.localTimezone).startOfDay();
                     var startDay = draggedEvent.startDay(), newDuration = cursorDate.subtractDate(startDay);
-                    newDuration.days += 1, newDuration = Duration.fromSeconds(draggedEvent.duration().toSeconds() + newDuration.toSeconds() - draggedEvent.dayDuration().toSeconds()), 
-                    newDuration.toDays() >= 1 ? draggedEvent.duration(newDuration) : draggedEvent.newEvent && (draggedEvent.mode = "resize-left", 
+                    newDuration.days += 1, (newDuration = Duration.fromSeconds(draggedEvent.duration().toSeconds() + newDuration.toSeconds() - draggedEvent.dayDuration().toSeconds())).toDays() >= 1 ? draggedEvent.duration(newDuration) : draggedEvent.newEvent && (draggedEvent.mode = "resize-left", 
                     newDuration = draggedEvent.startedAsDate.dayAfter().subtractDate(cursorDate), cursorDate = cursorDate.clone().convertToZone(that.state.timeZone()), 
                     draggedEvent.startDate(cursorDate), draggedEvent.duration(newDuration), (0, dragOverHandlers["resize-left"])(e, draggedEvent, cursorDate));
                 }
@@ -8416,8 +8393,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 calendars.version();
                 var numberOfWeeks = dateRangeViews().length, weekend = that.weekend(), dimensions = that.dimensions(), maxNumberOfAllDayEventRows = Math.max(0, Math.floor(freeSpaceForEvents(dimensions) / dimensions.allDayEventHeight));
                 return dateRangeViews().map(function(dateRangeView, index) {
-                    var allDayEventRows = intervalPacker(dateRangeView.allDayEvents(isAllDay)), allDayEventsOnDays = {}, allDayEvents = [];
-                    return allDayEventRows.forEach(function(partition, row) {
+                    var allDayEventsOnDays = {}, allDayEvents = [];
+                    return intervalPacker(dateRangeView.allDayEvents(isAllDay)).forEach(function(partition, row) {
                         partition.forEach(function(allDayEvent) {
                             if (row < maxNumberOfAllDayEventRows) {
                                 var calendar = allDayEvent.eventInstance.event.calendar, topOffset = row * that.dimensions().allDayEventHeight + that.dimensions().headingHeight;
@@ -8595,7 +8572,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                         }), function(err) {
                                             if (err) return that.handleError(err);
                                             that.draggedEvent(null);
-                                        })) : (eventInstance = model.eventInstance, eventInstance.event.isRecurring() ? (eventDialog.model({
+                                        })) : (eventInstance = model.eventInstance).event.isRecurring() ? (eventDialog.model({
                                             eventInstance: eventInstance
                                         }), that.draggedTimeLimitedEvent({
                                             eventInstance: eventInstance,
@@ -8604,16 +8581,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                             firstSegment: !0,
                                             startDate: eventInstance.startDate.clone(),
                                             endDate: eventInstance.endDate.clone()
-                                        }), duration = eventInstance.details.duration, startDate = eventInstance.startDate.clone(), 
-                                        startDate.year = target.date.year, startDate.month = target.date.month, startDate.day = target.date.day, 
-                                        (endDate = startDate.clone()).addDuration(duration), startDateDiff = startDate.subtractDateTz(eventInstance.startDate), 
-                                        newStartDate = eventDialog.startDate.peek().clone().addDuration(startDateDiff), 
+                                        }), duration = eventInstance.details.duration, (startDate = eventInstance.startDate.clone()).year = target.date.year, 
+                                        startDate.month = target.date.month, startDate.day = target.date.day, (endDate = startDate.clone()).addDuration(duration), 
+                                        startDateDiff = startDate.subtractDateTz(eventInstance.startDate), newStartDate = eventDialog.startDate.peek().clone().addDuration(startDateDiff), 
                                         eventDialog.startDate(newStartDate), eventDialog.endDate(newStartDate.clone().addDuration(duration)), 
                                         listenForEventDialogDiscard(function() {
                                             eventInstance.state.hidden(!1);
-                                        }), eventDialog.saveScope()) : (duration = eventInstance.details.duration, startDate = eventInstance.startDate.clone(), 
-                                        startDate.year = target.date.year, startDate.month = target.date.month, startDate.day = target.date.day, 
-                                        (endDate = startDate.clone()).addDuration(duration), that.executeAction(new UpdateEventInstanceAction({
+                                        }), eventDialog.saveScope()) : (duration = eventInstance.details.duration, (startDate = eventInstance.startDate.clone()).year = target.date.year, 
+                                        startDate.month = target.date.month, startDate.day = target.date.day, (endDate = startDate.clone()).addDuration(duration), 
+                                        that.executeAction(new UpdateEventInstanceAction({
                                             eventInstance: model.eventInstance,
                                             data: {
                                                 startDate: startDate,
@@ -8622,7 +8598,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                         }), function(err) {
                                             if (err) return that.handleError(err);
                                             that.draggedEvent(null);
-                                        })));
+                                        }));
                                     }
                                 },
                                 eventInstances: eventInstances
@@ -10907,8 +10883,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 }
             }
             function _bindSingle(combination, callback, action, sequenceName, level) {
-                self._directMap[combination + ":" + action] = callback, combination = combination.replace(/\s+/g, " ");
-                var info, sequence = combination.split(" ");
+                self._directMap[combination + ":" + action] = callback;
+                var info, sequence = (combination = combination.replace(/\s+/g, " ")).split(" ");
                 if (sequence.length > 1) return void _bindSequence(combination, sequence, callback, action);
                 info = _getKeyInfo(combination, action), self._callbacks[info.key] = self._callbacks[info.key] || [], 
                 _getMatches(info.key, info.modifiers, {
@@ -11097,7 +11073,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }, that.focusDomain = function(domainName, noDomFocus) {
                 if ("---" !== domainName) {
                     var domain = allDomains[domainName];
-                    domain || (domainName = defaultDomain, domain = domainName ? allDomains[domainName] : null);
+                    domain || (domain = (domainName = defaultDomain) ? allDomains[domainName] : null);
                     var element;
                     if (lastFocused && (lastFocused !== document.body && lastFocused.blur(), lastFocused = null), 
                     currentDomain = domainName, domain) if ("string" != typeof domain.focus || !domain.focusLock && noDomFocus) {
@@ -11246,7 +11222,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var o;
             "undefined" != typeof window ? o = window : "undefined" != typeof global ? o = global : "undefined" != typeof self && (o = self);
             var n = o;
-            n = n.com || (n.com = {}), n = n.one || (n.one = {}), n.insection = e();
+            (n = (n = n.com || (n.com = {})).one || (n.one = {})).insection = e();
         }
     }(function() {
         return function e(t, n, r) {
@@ -11404,16 +11380,16 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             isStart: !0,
                             isOpen: !interval.isEndOpen()
                         }), intervals.add(interval, interval);
-                    }), points = unique(points.sort(pointsOrder)), points = points.filter(function(point) {
+                    }), points = unique(points.sort(pointsOrder));
+                    var lastStart, result = [];
+                    return (points = points.filter(function(point) {
                         if (point.point === -1 / 0 || point.point === 1 / 0) return !0;
                         var expectedNumberOfIntervals = point.isOpen ? 1 : 0, i = 0;
                         return !intervals.forEachEntry(point.point, function(entry) {
                             if (expectedNumberOfIntervals === i) return !0;
                             i += 1;
                         });
-                    });
-                    var lastStart, result = [];
-                    return points.forEach(function(endPoint) {
+                    })).forEach(function(endPoint) {
                         endPoint.isStart ? lastStart = endPoint : lastStart && (lastStart.point === endPoint.point && (isInfinite(lastStart.point) || lastStart.isOpen && endPoint.isOpen) || result.push(Insection.interval(lastStart.isOpen ? "(" : "[", lastStart.point, endPoint.point, endPoint.isOpen ? ")" : "]")), 
                         lastStart = null);
                     }), result;
@@ -11790,8 +11766,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             if (until && dtstart && rrule) {
                 rrule.until = null;
                 var deadline = until;
-                deadline.isDate ? dtstart.isDate || (deadline = deadline.clone().dayAfter()) : dtstart.isDate ? (deadline = deadline.clone().startOfDay(), 
-                deadline.isDate = !0) : (deadline = deadline.clone().dayAfter().startOfDay(), deadline.isDate = !1);
+                deadline.isDate ? dtstart.isDate || (deadline = deadline.clone().dayAfter()) : dtstart.isDate ? (deadline = deadline.clone().startOfDay()).isDate = !0 : (deadline = deadline.clone().dayAfter().startOfDay()).isDate = !1;
                 var iterator = rrule.iterator(dtstart);
                 iterator.next();
                 var lastInstanceStartTime;
@@ -12172,9 +12147,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
 }(), function() {
     (0, System.amdDefine)("calendar/fixUpJcal.js", [], function() {
         function hash(str) {
-            var i, chr, len, hash = 0;
+            var i, len, hash = 0;
             if (0 === str.length) return hash;
-            for (i = 0, len = str.length; i < len; i++) chr = str.charCodeAt(i), hash = (hash << 5) - hash + chr, 
+            for (i = 0, len = str.length; i < len; i++) hash = (hash << 5) - hash + str.charCodeAt(i), 
             hash |= 0;
             return hash;
         }
@@ -12531,7 +12506,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             if (callback = callback || function() {}, !arr.length) return callback();
             var completed = 0, iterate = function() {
                 iterator(arr[completed], function(err) {
-                    err ? (callback(err), callback = function() {}) : (completed += 1, completed >= arr.length ? callback() : iterate());
+                    err ? (callback(err), callback = function() {}) : (completed += 1) >= arr.length ? callback() : iterate();
                 });
             };
             iterate();
@@ -12544,9 +12519,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var completed = 0, started = 0, running = 0;
                 !function replenish() {
                     if (completed >= arr.length) return callback();
-                    for (;running < limit && started < arr.length; ) started += 1, running += 1, iterator(arr[started - 1], function(err) {
-                        err ? (callback(err), callback = function() {}) : (completed += 1, running -= 1, 
-                        completed >= arr.length ? callback() : replenish());
+                    for (;running < limit && started < arr.length; ) running += 1, iterator(arr[(started += 1) - 1], function(err) {
+                        err ? (callback(err), callback = function() {}) : (running -= 1, (completed += 1) >= arr.length ? callback() : replenish());
                     });
                 }();
             };
@@ -12608,12 +12582,12 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }, async.foldr = async.reduceRight;
         var _filter = function(eachfn, arr, iterator, callback) {
             var results = [];
-            arr = _map(arr, function(x, i) {
+            eachfn(arr = _map(arr, function(x, i) {
                 return {
                     index: i,
                     value: x
                 };
-            }), eachfn(arr, function(x, callback) {
+            }), function(x, callback) {
                 iterator(x.value, function(v) {
                     v && results.push(x), callback();
                 });
@@ -12629,12 +12603,12 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         async.selectSeries = async.filterSeries;
         var _reject = function(eachfn, arr, iterator, callback) {
             var results = [];
-            arr = _map(arr, function(x, i) {
+            eachfn(arr = _map(arr, function(x, i) {
                 return {
                     index: i,
                     value: x
                 };
-            }), eachfn(arr, function(x, callback) {
+            }), function(x, callback) {
                 iterator(x.value, function(v) {
                     v || results.push(x), callback();
                 });
@@ -13047,7 +13021,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     fn.apply(that, args.concat([ cb ]));
                 }, callback);
             };
-            return arguments.length > 2 ? go.apply(this, Array.prototype.slice.call(arguments, 2)) : go;
+            if (arguments.length > 2) {
+                var args = Array.prototype.slice.call(arguments, 2);
+                return go.apply(this, args);
+            }
+            return go;
         };
         async.applyEach = doParallel(_applyEach), async.applyEachSeries = doSeries(_applyEach), 
         async.forever = function(fn, callback) {
@@ -13069,8 +13047,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             util.extend(this, util.pick(options, "calendarData"));
         }
         return FormatSanitationAction.prototype.name = "FormatSanitationAction", FormatSanitationAction.prototype.sanitizeIcalData = function(icalData, context, cb) {
-            icalData = icalData.replace(/<!--(.*?)-->/g, "");
-            var tzidsToReplace = [], timeZoneMatch = icalData.match(/BEGIN:VTIMEZONE([\s\S]*?)END:VTIMEZONE/g);
+            var tzidsToReplace = [], timeZoneMatch = (icalData = icalData.replace(/<!--(.*?)-->/g, "")).match(/BEGIN:VTIMEZONE([\s\S]*?)END:VTIMEZONE/g);
             if (timeZoneMatch) for (var i = 0; i < timeZoneMatch.length; i++) {
                 var timeZone = timeZoneMatch[i];
                 if (timeZone.replace(/\r?\n\s/g, "").match(/RRULE.*((BYMONTH=|BYWEEKNO=|BYMONTHDAY=|BYDAY=).*BYYEARDAY=|BYYEARDAY=.*(BYMONTH=|BYWEEKNO=|BYMONTHDAY=|BYDAY=))/g)) {
@@ -13520,9 +13497,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
 }(), function() {
     (0, System.amdDefine)("3rdparty/version-tracking/VersionUpgradeTimer.js", [], function() {
         function VersionUpgradeTimer(options) {
-            options = options || {}, this.timeBeforeStartingUpgrade = Math.floor(6 * Math.random() * 36e5), 
-            this.idleTimeBeforeUpgrading = 18e4, this.upgradeTimer = null, this.idleTimer = null, 
-            this.readyToUpgrade = !1, this.onReadyToUpgrade = options.onReadyToUpgrade;
+            options = options || {};
+            this.timeBeforeStartingUpgrade = Math.floor(6 * Math.random() * 36e5), this.idleTimeBeforeUpgrading = 18e4, 
+            this.upgradeTimer = null, this.idleTimer = null, this.readyToUpgrade = !1, this.onReadyToUpgrade = options.onReadyToUpgrade;
         }
         return VersionUpgradeTimer.prototype._startIdleTimer = function() {
             var that = this;
@@ -13727,9 +13704,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     var value = element.value, texts = value ? value.split(separators) : [];
                     texts = arrayMap(texts, function(text) {
                         return text.trim();
-                    }), texts = arrayFilter(texts, function(text) {
+                    }), fireOnSelect(texts = arrayFilter(texts, function(text) {
                         return text.length > 0;
-                    }), fireOnSelect(texts, justPasted);
+                    }), justPasted);
                 }
                 function selectItem(item) {
                     fireOnSelect(separators ? [ item ] : item), options.target && setTimeout(function() {
@@ -13973,9 +13950,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     }
                     function unhandled(ctx) {
                         if (!ctx.handled) {
-                            var current;
-                            current = hashbang ? base + location.hash.replace("#!", "") : location.pathname + location.search, 
-                            current !== ctx.canonicalPath && (page.stop(), ctx.handled = !1, location.href = ctx.canonicalPath);
+                            (hashbang ? base + location.hash.replace("#!", "") : location.pathname + location.search) !== ctx.canonicalPath && (page.stop(), 
+                            ctx.handled = !1, location.href = ctx.canonicalPath);
                         }
                     }
                     function decodeURLEncodedURIComponent(val) {
@@ -14292,16 +14268,14 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             return parts.length > 1 && (result = parts[0] + "@", string = parts[1]), result + map(string.split(regexSeparators), fn).join(".");
         }
         function ucs2decode(string) {
-            for (var value, extra, output = [], counter = 0, length = string.length; counter < length; ) value = string.charCodeAt(counter++), 
-            value >= 55296 && value <= 56319 && counter < length ? (extra = string.charCodeAt(counter++), 
-            56320 == (64512 & extra) ? output.push(((1023 & value) << 10) + (1023 & extra) + 65536) : (output.push(value), 
-            counter--)) : output.push(value);
+            for (var value, extra, output = [], counter = 0, length = string.length; counter < length; ) (value = string.charCodeAt(counter++)) >= 55296 && value <= 56319 && counter < length ? 56320 == (64512 & (extra = string.charCodeAt(counter++))) ? output.push(((1023 & value) << 10) + (1023 & extra) + 65536) : (output.push(value), 
+            counter--) : output.push(value);
             return output;
         }
         function ucs2encode(array) {
             return map(array, function(value) {
                 var output = "";
-                return value > 65535 && (value -= 65536, output += stringFromCharCode(value >>> 10 & 1023 | 55296), 
+                return value > 65535 && (output += stringFromCharCode((value -= 65536) >>> 10 & 1023 | 55296), 
                 value = 56320 | 1023 & value), output += stringFromCharCode(value);
             }).join("");
         }
@@ -14323,20 +14297,20 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             for (index = basic > 0 ? basic + 1 : 0; index < inputLength; ) {
                 for (oldi = i, w = 1, k = base; index >= inputLength && error("invalid-input"), 
                 ((digit = basicToDigit(input.charCodeAt(index++))) >= base || digit > floor((maxInt - i) / w)) && error("overflow"), 
-                i += digit * w, t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias, !(digit < t); k += base) baseMinusT = base - t, 
-                w > floor(maxInt / baseMinusT) && error("overflow"), w *= baseMinusT;
-                out = output.length + 1, bias = adapt(i - oldi, out, 0 == oldi), floor(i / out) > maxInt - n && error("overflow"), 
+                i += digit * w, t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias, !(digit < t); k += base) w > floor(maxInt / (baseMinusT = base - t)) && error("overflow"), 
+                w *= baseMinusT;
+                bias = adapt(i - oldi, out = output.length + 1, 0 == oldi), floor(i / out) > maxInt - n && error("overflow"), 
                 n += floor(i / out), i %= out, output.splice(i++, 0, n);
             }
             return ucs2encode(output);
         }
         function encode(input) {
             var n, delta, handledCPCount, basicLength, bias, j, m, q, k, t, currentValue, inputLength, handledCPCountPlusOne, baseMinusT, qMinusT, output = [];
-            for (input = ucs2decode(input), inputLength = input.length, n = initialN, delta = 0, 
+            for (inputLength = (input = ucs2decode(input)).length, n = initialN, delta = 0, 
             bias = initialBias, j = 0; j < inputLength; ++j) (currentValue = input[j]) < 128 && output.push(stringFromCharCode(currentValue));
             for (handledCPCount = basicLength = output.length, basicLength && output.push(delimiter); handledCPCount < inputLength; ) {
                 for (m = maxInt, j = 0; j < inputLength; ++j) (currentValue = input[j]) >= n && currentValue < m && (m = currentValue);
-                for (handledCPCountPlusOne = handledCPCount + 1, m - n > floor((maxInt - delta) / handledCPCountPlusOne) && error("overflow"), 
+                for (m - n > floor((maxInt - delta) / (handledCPCountPlusOne = handledCPCount + 1)) && error("overflow"), 
                 delta += (m - n) * handledCPCountPlusOne, n = m, j = 0; j < inputLength; ++j) if ((currentValue = input[j]) < n && ++delta > maxInt && error("overflow"), 
                 currentValue == n) {
                     for (q = delta, k = base; t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias, 
@@ -14438,9 +14412,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }, purify.email = purify.emailAddress = function(rawValue, defaultValue) {
             var fragments, encodedEmail, encodedDomain;
             try {
-                "string" == typeof rawValue && oneValidation.emailIdn.test(rawValue) && (fragments = rawValue.split("@"), 
-                encodedDomain = 2 === fragments.length && punycode.toASCII(fragments[1]).toLowerCase(), 
-                /\.[^\.]{2,}$/.test(punycode.toUnicode(encodedDomain)) || (encodedDomain = void 0));
+                if ("string" == typeof rawValue && oneValidation.emailIdn.test(rawValue)) {
+                    fragments = rawValue.split("@"), encodedDomain = 2 === fragments.length && punycode.toASCII(fragments[1]).toLowerCase();
+                    var decodedDomain = punycode.toUnicode(encodedDomain);
+                    /\.[^\.]{2,}$/.test(decodedDomain) || (encodedDomain = void 0);
+                }
             } catch (e) {
                 encodedDomain = void 0;
             } finally {
@@ -14460,8 +14436,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }, purify.domain = purify.domainName = function(rawValue, defaultValue) {
             var encodedDomain;
             try {
-                "string" == typeof rawValue && oneValidation.domainIdn.test(rawValue) && (encodedDomain = punycode.toASCII(rawValue.toLowerCase()), 
-                /\.[^\.]{2,}$/.test(punycode.toUnicode(encodedDomain)) || (encodedDomain = void 0));
+                if ("string" == typeof rawValue && oneValidation.domainIdn.test(rawValue)) {
+                    encodedDomain = punycode.toASCII(rawValue.toLowerCase());
+                    var decodedDomain = punycode.toUnicode(encodedDomain);
+                    /\.[^\.]{2,}$/.test(decodedDomain) || (encodedDomain = void 0);
+                }
             } catch (e) {
                 encodedDomain = void 0;
             } finally {
@@ -14601,8 +14580,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var displayName, email, matches = displayNameAndEmailRegExp.exec(text), recipientProperties = {};
             return matches ? ((displayName = matches[1].trim()) && displayName.match(/^".*"$/) && (displayName = displayName.replace(/^"/, "").replace(/"$/, "")), 
             email = matches[2] || matches[3], recipientProperties.displayName = displayName, 
-            recipientProperties.email = purify.email(email)) : (email = purify.email(text), 
-            email ? recipientProperties.email = email : recipientProperties.displayName = text), 
+            recipientProperties.email = purify.email(email)) : (email = purify.email(text)) ? recipientProperties.email = email : recipientProperties.displayName = text, 
             new Recipient(recipientProperties);
         }, Recipient;
     });
@@ -16155,8 +16133,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             types: types,
             contentTypeByExtension: contentTypeByExtension,
             getClass: function(fileName, mimeType) {
-                var fileExtension = fileNameExtension(fileName || ""), mimeTypes = (mimeType || "application/octet-stream").toLowerCase().split(";"), classList = [ "icon" ];
-                return mimeTypes.forEach(function(type) {
+                var fileExtension = fileNameExtension(fileName || ""), classList = [ "icon" ];
+                return (mimeType || "application/octet-stream").toLowerCase().split(";").forEach(function(type) {
                     var path = type.replace(/^\s+|\s+$/g, "").split("/"), group = types[path[0]];
                     group && (group[path[1]] ? (type = group[path[1]], classList.push(type.path || path[0]), 
                     type.className && classList.push(type.className)) : extensionIdx[fileExtension] ? (type = extensionIdx[fileExtension], 
@@ -16958,8 +16936,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 }
                 return value = String(value), document.cookie = [ encodeURIComponent(key), "=", options.raw ? value : encodeURIComponent(value), options.expires ? "; expires=" + options.expires.toUTCString() : "", options.path ? "; path=" + options.path : "", options.domain ? "; domain=" + options.domain : "", options.secure ? "; secure" : "" ].join("");
             }
-            options = value || {};
-            for (var pair, decode = options.raw ? function(s) {
+            for (var pair, decode = (options = value || {}).raw ? function(s) {
                 return s;
             } : decodeURIComponent, pairs = document.cookie.split("; "), i = 0; pair = pairs[i] && pairs[i].split("="); i++) if (decode(pair[0]) === key) return decode(pair[1] || "");
             return null;
@@ -17417,7 +17394,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 target.incrementReferences = function() {
                     referenceCount += 1;
                 }, target.decrementReferences = function() {
-                    0 == (referenceCount -= 1) && (lastReferenceTime = Date.now(), target.onNotReferenced && target.onNotReferenced());
+                    0 === (referenceCount -= 1) && (lastReferenceTime = Date.now(), target.onNotReferenced && target.onNotReferenced());
                 }, target.hasReferences = function() {
                     return referenceCount > 0;
                 }, target.lastReferenceTime = function() {
@@ -17661,9 +17638,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 return !seen[key] && (seen[key] = !0, !0);
             });
         }, util.decodePairs = function(text, allowDuplicates) {
-            text = text || "";
-            var entries = text.split("&"), result = {};
-            return entries.forEach(function(entry) {
+            var result = {};
+            return (text = text || "").split("&").forEach(function(entry) {
                 var pair = entry.split("=");
                 allowDuplicates ? (result[decodeURIComponent(pair[0])] = result[decodeURIComponent(pair[0])] || []).push(decodeURIComponent(pair[1])) : result[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
             }), result;
@@ -17706,14 +17682,23 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }), $html.html();
         }, util.pick = function(obj, keys) {
             var copy = {};
-            return obj && (Array.isArray(keys) || (keys = [].concat(Array.prototype.slice.call(arguments, 1))), 
-            keys.forEach(function(key) {
-                copy[key] = obj[key];
-            })), copy;
+            if (obj) {
+                if (!Array.isArray(keys)) {
+                    var args = Array.prototype.slice.call(arguments, 1);
+                    keys = [].concat(args);
+                }
+                keys.forEach(function(key) {
+                    copy[key] = obj[key];
+                });
+            }
+            return copy;
         }, util.omit = function(obj, keys) {
             var copy = {};
             if (obj) {
-                Array.isArray(keys) || (keys = [].concat(Array.prototype.slice.call(arguments, 1)));
+                if (!Array.isArray(keys)) {
+                    var args = Array.prototype.slice.call(arguments, 1);
+                    keys = [].concat(args);
+                }
                 var keyIndex = util.uniqueIndexBy(keys);
                 Object.keys(obj).filter(function(key) {
                     return !(key in keyIndex);
@@ -17758,9 +17743,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 return !!predicate(item) && (result.push(item), !0);
             }), result;
         }, util.composerOptionsFromMailto = function(mailto) {
-            mailto = mailto.replace(/^mailto:/, "");
             var options = {
-                to: mailto.replace(/\?.*$/, "")
+                to: (mailto = mailto.replace(/^mailto:/, "")).replace(/\?.*$/, "")
             }, paramArray = mailto.match(/^.*\?((?:(?:[^=& ]+=[^&]+)&)*(?:[^=& ]+=[^&]+))$/);
             return paramArray && paramArray[1].split(/&/).forEach(function(param) {
                 var parts = param.split(/\=/);
@@ -17788,7 +17772,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             fileReadDone = function() {
                 files.length + directories.length === inFiles.length && cb(files, directories);
             }, checkFile = function(file) {
-                reader = new FileReader(), reader.onload = function() {
+                (reader = new FileReader()).onload = function() {
                     files.push(file), fileReadDone();
                 }, reader.onerror = function() {
                     directories.push(file), fileReadDone();
@@ -18060,13 +18044,13 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 search.invalidateCache();
             });
         }, Folder.prototype.search = function(options) {
-            options = util.extend({
+            (options = util.extend({
                 pageLength: 50,
                 sortKey: "ARRIVAL",
                 sortDirection: "DESC",
                 viewFilter: "ALL",
                 query: ""
-            }, options), options.folder = this;
+            }, options)).folder = this;
             var key = createSearchKey(options), search = this.searchCache.get(key);
             return search || (search = new Search(options), this.searchCache.store(search)), 
             search;
@@ -18244,15 +18228,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             localFolder.dirty = !1;
                         }
                     }), localStorage.setItem("InboxModSeq", state.folders.inbox.highestmodseq());
-                    var removedFoldersFromServer = Object.keys(localCache).filter(function(key) {
-                        return !(-1 !== state.folders.defaults.indexOf(key) || remoteCache[key] || localCache[key] && localCache[key].isNew());
-                    }), removeSubFoldersFromLocalCache = function(folders) {
+                    var removeSubFoldersFromLocalCache = function(folders) {
                         (folders = Array.isArray(folders) ? folders : [ folders ]).forEach(function(folder) {
                             var key = getKey(folder);
                             localCache[key] && (localCache[key].dispose(), delete localCache[key], removeSubFoldersFromLocalCache(folder.children()));
                         });
                     };
-                    removedFoldersFromServer.forEach(function(key) {
+                    Object.keys(localCache).filter(function(key) {
+                        return !(-1 !== state.folders.defaults.indexOf(key) || remoteCache[key] || localCache[key] && localCache[key].isNew());
+                    }).forEach(function(key) {
                         var folderToRemove = localCache[key];
                         folderToRemove && (folderToRemove.remove(), removeSubFoldersFromLocalCache(folderToRemove), 
                         folderToRemove.dispose());
@@ -18262,15 +18246,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             folder && folder.uidvalidity(null);
                         }
                     });
-                    var newFoldersFromServer = Object.keys(remoteCache).filter(function(key) {
-                        return !localCache[key];
-                    }), addAllSubFolders = function(folders) {
+                    var addAllSubFolders = function(folders) {
                         (folders = Array.isArray(folders) ? folders : [ folders ]).forEach(function(folder) {
                             var key = getKey(folder);
                             localCache[key] || (localCache[key] = folder), folder.children().length && addAllSubFolders(folder.children());
                         });
                     };
-                    newFoldersFromServer.forEach(function(key) {
+                    Object.keys(remoteCache).filter(function(key) {
+                        return !localCache[key];
+                    }).forEach(function(key) {
                         if (!localCache[key]) {
                             var remoteFolder = remoteCache[key], parentId = remoteFolder.id.substr(0, remoteFolder.id.lastIndexOf(".")), parentFolder = state.folders.inbox;
                             "INBOX" !== parentId && (parentFolder = Object.keys(localCache).map(function(localKey) {
@@ -19040,12 +19024,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var paramName, name = property[0].toUpperCase(), jsName = property[0], params = property[1], line = name;
                 for (paramName in params) {
                     var value = params[paramName];
-                    if (params.hasOwnProperty(paramName)) {
-                        multiValue = paramName in designSet.param && designSet.param[paramName].multiValue;
-                        multiValue && Array.isArray(value) ? (designSet.param[paramName].multiValueSeparateDQuote && (multiValue = '"' + multiValue + '"'), 
-                        value = value.map(stringify._rfc6868Unescape), value = stringify.multiValue(value, multiValue, "unknown", null, designSet)) : value = stringify._rfc6868Unescape(value), 
-                        line += ";" + paramName.toUpperCase(), line += "=" + stringify.propertyValue(value);
-                    }
+                    params.hasOwnProperty(paramName) && ((multiValue = paramName in designSet.param && designSet.param[paramName].multiValue) && Array.isArray(value) ? (designSet.param[paramName].multiValueSeparateDQuote && (multiValue = '"' + multiValue + '"'), 
+                    value = value.map(stringify._rfc6868Unescape), value = stringify.multiValue(value, multiValue, "unknown", null, designSet)) : value = stringify._rfc6868Unescape(value), 
+                    line += ";" + paramName.toUpperCase(), line += "=" + stringify.propertyValue(value));
                 }
                 if (3 === property.length) return line + ":";
                 var valueType = property[2];
@@ -19130,24 +19111,21 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 valueType || (valueType = "value" in params ? params.value.toLowerCase() : propertyDetails ? propertyDetails.defaultType : "unknown"), 
                 delete params.value;
                 var result;
-                multiValue && structuredValue ? (value = parser._parseMultiValue(value, structuredValue, valueType, [], multiValue, state.designSet, structuredValue), 
-                result = [ name, params, valueType, value ]) : multiValue ? (result = [ name, params, valueType ], 
-                parser._parseMultiValue(value, multiValue, valueType, result, null, state.designSet, !1)) : structuredValue ? (value = parser._parseMultiValue(value, structuredValue, valueType, [], null, state.designSet, structuredValue), 
-                result = [ name, params, valueType, value ]) : (value = parser._parseValue(value, valueType, state.designSet, !1), 
-                result = [ name, params, valueType, value ]), "vcard" !== state.component[0] || 0 !== state.component[1].length || "version" === name && "4.0" === value || (state.designSet = design.getDesignSet("vcard3")), 
+                multiValue && structuredValue ? result = [ name, params, valueType, value = parser._parseMultiValue(value, structuredValue, valueType, [], multiValue, state.designSet, structuredValue) ] : multiValue ? (result = [ name, params, valueType ], 
+                parser._parseMultiValue(value, multiValue, valueType, result, null, state.designSet, !1)) : result = structuredValue ? [ name, params, valueType, value = parser._parseMultiValue(value, structuredValue, valueType, [], null, state.designSet, structuredValue) ] : [ name, params, valueType, value = parser._parseValue(value, valueType, state.designSet, !1) ], 
+                "vcard" !== state.component[0] || 0 !== state.component[1].length || "version" === name && "4.0" === value || (state.designSet = design.getDesignSet("vcard3")), 
                 state.component[1].push(result);
             }, parser._parseValue = function(value, type, designSet, structuredValue) {
                 return type in designSet.value && "fromICAL" in designSet.value[type] ? designSet.value[type].fromICAL(value, structuredValue) : value;
             }, parser._parseParameters = function(line, start, designSet) {
                 for (var name, lcname, value, type, multiValue, mvdelim, lastParam = start, pos = 0, result = {}, valuePos = -1; !1 !== pos && -1 !== (pos = helpers.unescapedIndexOf(line, "=", pos + 1)); ) {
                     if (0 == (name = line.substr(lastParam + 1, pos - lastParam - 1)).length) throw new ParserError("Empty parameter name in '" + line + "'");
-                    if (lcname = name.toLowerCase(), type = lcname in designSet.param && designSet.param[lcname].valueType ? designSet.param[lcname].valueType : "text", 
+                    if (type = (lcname = name.toLowerCase()) in designSet.param && designSet.param[lcname].valueType ? designSet.param[lcname].valueType : "text", 
                     lcname in designSet.param && (multiValue = designSet.param[lcname].multiValue, designSet.param[lcname].multiValueSeparateDQuote && (mvdelim = parser._rfc6868Escape('"' + multiValue + '"'))), 
                     '"' === line[pos + 1]) {
                         if (valuePos = pos + 2, pos = helpers.unescapedIndexOf(line, '"', valuePos), multiValue && -1 != pos) for (var extendedValue = !0; extendedValue; ) line[pos + 1] == multiValue && '"' == line[pos + 2] ? pos = helpers.unescapedIndexOf(line, '"', pos + 3) : extendedValue = !1;
                         if (-1 === pos) throw new ParserError('invalid line (no matching double quote) "' + line + '"');
-                        value = line.substr(valuePos, pos - valuePos), lastParam = helpers.unescapedIndexOf(line, ";", pos), 
-                        -1 === lastParam && (pos = !1);
+                        value = line.substr(valuePos, pos - valuePos), -1 === (lastParam = helpers.unescapedIndexOf(line, ";", pos)) && (pos = !1);
                     } else {
                         valuePos = pos + 1;
                         var nextPos = helpers.unescapedIndexOf(line, ";", valuePos), propValuePos = helpers.unescapedIndexOf(line, ":", valuePos);
@@ -19181,8 +19159,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }, parser._eachLine = function(buffer, callback) {
                 var line, firstChar, newlineOffset, len = buffer.length, lastPos = buffer.search(/[^ \t]/), pos = lastPos;
                 do {
-                    pos = buffer.indexOf("\n", lastPos) + 1, newlineOffset = pos > 1 && "\r" === buffer[pos - 2] ? 2 : 1, 
-                    0 === pos && (pos = len, newlineOffset = 0), firstChar = buffer[lastPos], " " === firstChar || "\t" === firstChar ? line += buffer.substr(lastPos + 1, pos - lastPos - (newlineOffset + 1)) : (line && callback(null, line), 
+                    newlineOffset = (pos = buffer.indexOf("\n", lastPos) + 1) > 1 && "\r" === buffer[pos - 2] ? 2 : 1, 
+                    0 === pos && (pos = len, newlineOffset = 0), " " === (firstChar = buffer[lastPos]) || "\t" === firstChar ? line += buffer.substr(lastPos + 1, pos - lastPos - (newlineOffset + 1)) : (line && callback(null, line), 
                     line = buffer.substr(lastPos, pos - lastPos - newlineOffset)), lastPos = pos;
                 } while (pos !== len);
                 (line = line.trim()).length && callback(null, line);
@@ -19478,24 +19456,22 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     this.value = this._b64_encode(aValue);
                 },
                 _b64_encode: function(data) {
-                    var o1, o2, o3, h1, h2, h3, h4, bits, b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", i = 0, ac = 0, enc = "", tmp_arr = [];
+                    var h1, h2, h3, h4, bits, b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", i = 0, ac = 0, enc = "", tmp_arr = [];
                     if (!data) return data;
                     do {
-                        o1 = data.charCodeAt(i++), o2 = data.charCodeAt(i++), o3 = data.charCodeAt(i++), 
-                        bits = o1 << 16 | o2 << 8 | o3, h1 = bits >> 18 & 63, h2 = bits >> 12 & 63, h3 = bits >> 6 & 63, 
-                        h4 = 63 & bits, tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+                        h1 = (bits = data.charCodeAt(i++) << 16 | data.charCodeAt(i++) << 8 | data.charCodeAt(i++)) >> 18 & 63, 
+                        h2 = bits >> 12 & 63, h3 = bits >> 6 & 63, h4 = 63 & bits, tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
                     } while (i < data.length);
                     enc = tmp_arr.join("");
                     var r = data.length % 3;
                     return (r ? enc.slice(0, r - 3) : enc) + "===".slice(r || 3);
                 },
                 _b64_decode: function(data) {
-                    var o1, o2, o3, h1, h2, h3, h4, bits, b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", i = 0, ac = 0, tmp_arr = [];
+                    var o1, o2, o3, h3, h4, bits, b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", i = 0, ac = 0, tmp_arr = [];
                     if (!data) return data;
                     data += "";
                     do {
-                        h1 = b64.indexOf(data.charAt(i++)), h2 = b64.indexOf(data.charAt(i++)), h3 = b64.indexOf(data.charAt(i++)), 
-                        h4 = b64.indexOf(data.charAt(i++)), bits = h1 << 18 | h2 << 12 | h3 << 6 | h4, o1 = bits >> 16 & 255, 
+                        o1 = (bits = b64.indexOf(data.charAt(i++)) << 18 | b64.indexOf(data.charAt(i++)) << 12 | (h3 = b64.indexOf(data.charAt(i++))) << 6 | (h4 = b64.indexOf(data.charAt(i++)))) >> 16 & 255, 
                         o2 = bits >> 8 & 255, o3 = 255 & bits, tmp_arr[ac++] = 64 == h3 ? String.fromCharCode(o1) : 64 == h4 ? String.fromCharCode(o1, o2) : String.fromCharCode(o1, o2, o3);
                     } while (i < data.length);
                     return tmp_arr.join("");
@@ -19767,7 +19743,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         var props = aComponent.getAllProperties("rdate");
                         for (var rdatekey in props) if (props.hasOwnProperty(rdatekey)) {
                             var time = props[rdatekey].getFirstValue();
-                            change = init_changes(), change.year = time.year, change.month = time.month, change.day = time.day, 
+                            (change = init_changes()).year = time.year, change.month = time.month, change.day = time.day, 
                             time.isDate ? (change.hour = dtstart.hour, change.minute = dtstart.minute, change.second = dtstart.second, 
                             dtstart.zone != ICAL.Timezone.utcTimezone && ICAL.Timezone.adjust_change(change, 0, 0, 0, -change.prevUtcOffset)) : (change.hour = time.hour, 
                             change.minute = time.minute, change.second = time.second, time.zone != ICAL.Timezone.utcTimezone && ICAL.Timezone.adjust_change(change, 0, 0, 0, -change.prevUtcOffset)), 
@@ -19783,7 +19759,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             change.isDate = occ.isDate, ICAL.Timezone.adjust_change(change, 0, 0, 0, -change.prevUtcOffset), 
                             changes.push(change);
                         }
-                    } else change = init_changes(), change.year = dtstart.year, change.month = dtstart.month, 
+                    } else (change = init_changes()).year = dtstart.year, change.month = dtstart.month, 
                     change.day = dtstart.day, change.hour = dtstart.hour, change.minute = dtstart.minute, 
                     change.second = dtstart.second, ICAL.Timezone.adjust_change(change, 0, 0, 0, -change.prevUtcOffset), 
                     changes.push(change);
@@ -19823,8 +19799,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     return zones[tzid];
                 },
                 register: function(name, timezone) {
-                    if (name instanceof ICAL.Component && "vtimezone" === name.name && (timezone = new ICAL.Timezone(name), 
-                    name = timezone.tzid), !(timezone instanceof ICAL.Timezone)) throw new TypeError("timezone must be ICAL.Timezone or ICAL.Component");
+                    if (name instanceof ICAL.Component && "vtimezone" === name.name && (name = (timezone = new ICAL.Timezone(name)).tzid), 
+                    !(timezone instanceof ICAL.Timezone)) throw new TypeError("timezone must be ICAL.Timezone or ICAL.Component");
                     zones[name] = timezone;
                 },
                 remove: function(tzid) {
@@ -19938,11 +19914,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         otherDay.day = 1, 0 != pos && pos--, start = otherDay.day;
                         var offset = aDayOfWeek - otherDay.dayOfWeek();
                         offset < 0 && (offset += 7), start += offset, start -= aDayOfWeek, weekday = aDayOfWeek;
-                    } else {
-                        otherDay.day = daysInMonth;
-                        var endDow = otherDay.dayOfWeek();
-                        pos++, weekday = endDow - aDayOfWeek, weekday < 0 && (weekday += 7), weekday = daysInMonth - weekday;
-                    }
+                    } else otherDay.day = daysInMonth, pos++, (weekday = otherDay.dayOfWeek() - aDayOfWeek) < 0 && (weekday += 7), 
+                    weekday = daysInMonth - weekday;
                     return weekday += 7 * pos, start + weekday;
                 },
                 isNthWeekDay: function(aDayOfWeek, aPos) {
@@ -20038,8 +20011,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     return this._cachedUnixTime = ms / 1e3, this._cachedUnixTime;
                 },
                 toJSON: function() {
-                    for (var prop, copy = [ "year", "month", "day", "hour", "minute", "second", "isDate" ], result = Object.create(null), i = 0, len = copy.length; i < len; i++) prop = copy[i], 
-                    result[prop] = this[prop];
+                    for (var prop, copy = [ "year", "month", "day", "hour", "minute", "second", "isDate" ], result = Object.create(null), i = 0, len = copy.length; i < len; i++) result[prop = copy[i]] = this[prop];
                     return this.zone && (result.timezone = this.zone.tzid), result;
                 }
             }, function() {
@@ -20161,7 +20133,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     return ICAL.design.vcard.value[this.icaltype].toICAL(this.toString());
                 },
                 toString: function() {
-                    var zone, p2 = ICAL.helpers.pad2, y = this.year, m = this.month, d = this.day, h = this.hour, mm = this.minute, s = this.second, hasYear = null !== y, hasMonth = null !== m, hasDay = null !== d, hasHour = null !== h, hasMinute = null !== mm, hasSecond = null !== s, datepart = (hasYear ? p2(y) + (hasMonth || hasDay ? "-" : "") : hasMonth || hasDay ? "--" : "") + (hasMonth ? p2(m) : "") + (hasDay ? "-" + p2(d) : ""), timepart = (hasHour ? p2(h) : "-") + (hasHour && hasMinute ? ":" : "") + (hasMinute ? p2(mm) : "") + (hasHour || hasMinute ? "" : "-") + (hasMinute && hasSecond ? ":" : "") + (hasSecond ? p2(s) : "");
+                    var zone, p2 = ICAL.helpers.pad2, y = this.year, m = this.month, d = this.day, h = this.hour, mm = this.minute, s = this.second, hasMonth = null !== m, hasDay = null !== d, hasHour = null !== h, hasMinute = null !== mm, hasSecond = null !== s, datepart = (null !== y ? p2(y) + (hasMonth || hasDay ? "-" : "") : hasMonth || hasDay ? "--" : "") + (hasMonth ? p2(m) : "") + (hasDay ? "-" + p2(d) : ""), timepart = (hasHour ? p2(h) : "-") + (hasHour && hasMinute ? ":" : "") + (hasMinute ? p2(mm) : "") + (hasHour || hasMinute ? "" : "-") + (hasMinute && hasSecond ? ":" : "") + (hasSecond ? p2(s) : "");
                     switch (zone = this.zone === ICAL.Timezone.utcTimezone ? "Z" : this.zone instanceof ICAL.UtcOffset ? this.zone.toString() : this.zone === ICAL.Timezone.localTimezone ? "" : this.zone instanceof ICAL.Timezone ? ICAL.UtcOffset.fromSeconds(this.zone.utcOffset(this)).toString() : "", 
                     this.icaltype) {
                       case "time":
@@ -20375,7 +20347,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     this.last.hour = this.setup_defaults("BYHOUR", "HOURLY", this.dtstart.hour), this.last.day = this.setup_defaults("BYMONTHDAY", "DAILY", this.dtstart.day), 
                     this.last.month = this.setup_defaults("BYMONTH", "MONTHLY", this.dtstart.month), 
                     "WEEKLY" == this.rule.freq) if ("BYDAY" in parts) {
-                        var bydayParts = this.ruleDayOfWeek(parts.BYDAY[0]), pos = bydayParts[0], dow = bydayParts[1], wkdy = dow - this.last.dayOfWeek();
+                        var pos = (bydayParts = this.ruleDayOfWeek(parts.BYDAY[0]))[0], wkdy = (dow = bydayParts[1]) - this.last.dayOfWeek();
                         (this.last.dayOfWeek() < dow && wkdy >= 0 || wkdy < 0) && (this.last.day += wkdy);
                     } else {
                         var dayName = ICAL.Recur.numericDayToIcalDay(this.dtstart.dayOfWeek());
@@ -20543,11 +20515,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         }
                         day > daysInMonth && (this.last.day = 1, this.increment_month(), this.is_day_in_byday(this.last) ? this.has_by_data("BYSETPOS") && !this.check_set_position(1) || (data_valid = 1) : data_valid = 0);
                     } else if (this.has_by_data("BYMONTHDAY")) {
-                        this.by_indices.BYMONTHDAY++, this.by_indices.BYMONTHDAY >= this.by_data.BYMONTHDAY.length && (this.by_indices.BYMONTHDAY = 0, 
+                        ++this.by_indices.BYMONTHDAY >= this.by_data.BYMONTHDAY.length && (this.by_indices.BYMONTHDAY = 0, 
                         this.increment_month());
-                        var daysInMonth = ICAL.Time.daysInMonth(this.last.month, this.last.year), day = this.by_data.BYMONTHDAY[this.by_indices.BYMONTHDAY];
-                        day < 0 && (day = daysInMonth + day + 1), day > daysInMonth ? (this.last.day = 1, 
-                        data_valid = this.is_day_in_byday(this.last)) : this.last.day = day;
+                        daysInMonth = ICAL.Time.daysInMonth(this.last.month, this.last.year);
+                        (day = this.by_data.BYMONTHDAY[this.by_indices.BYMONTHDAY]) < 0 && (day = daysInMonth + day + 1), 
+                        day > daysInMonth ? (this.last.day = 1, data_valid = this.is_day_in_byday(this.last)) : this.last.day = day;
                     } else {
                         this.increment_month();
                         daysInMonth = ICAL.Time.daysInMonth(this.last.month, this.last.year);
@@ -20561,10 +20533,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     if (!this.has_by_data("BYDAY")) return 1;
                     for (;;) {
                         var tt = new ICAL.Time();
-                        this.by_indices.BYDAY++, this.by_indices.BYDAY == Object.keys(this.by_data.BYDAY).length && (this.by_indices.BYDAY = 0, 
+                        ++this.by_indices.BYDAY == Object.keys(this.by_data.BYDAY).length && (this.by_indices.BYDAY = 0, 
                         end_of_data = 1);
                         var coded_day = this.by_data.BYDAY[this.by_indices.BYDAY], dow = this.ruleDayOfWeek(coded_day)[1];
-                        dow -= this.rule.wkst, dow < 0 && (dow += 7), tt.year = this.last.year, tt.month = this.last.month, 
+                        (dow -= this.rule.wkst) < 0 && (dow += 7), tt.year = this.last.year, tt.month = this.last.month, 
                         tt.day = this.last.day;
                         var startOfWeek = tt.startDoyWeek(this.rule.wkst);
                         if (!(dow + startOfWeek < 1) || end_of_data) {
@@ -20602,8 +20574,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     var has_by_rule = aRuleType in this.by_data, this_freq = this.rule.freq == aInterval, end_of_data = 0;
                     if (aPreviousIncr && 0 == this[aPreviousIncr]()) return end_of_data;
                     if (has_by_rule) {
-                        this.by_indices[aRuleType]++;
-                        this.by_indices[aRuleType];
+                        ++this.by_indices[aRuleType];
                         var dta = this.by_data[aRuleType];
                         this.by_indices[aRuleType] == dta.length && (this.by_indices[aRuleType] = 0, end_of_data = 1), 
                         this.last[aDateAttr] = dta[this.by_indices[aRuleType]];
@@ -20614,7 +20585,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 increment_monthday: function(inc) {
                     for (var i = 0; i < inc; i++) {
                         var daysInMonth = ICAL.Time.daysInMonth(this.last.month, this.last.year);
-                        this.last.day++, this.last.day > daysInMonth && (this.last.day -= daysInMonth, this.increment_month());
+                        ++this.last.day > daysInMonth && (this.last.day -= daysInMonth, this.increment_month());
                     }
                 },
                 increment_month: function() {
@@ -20656,10 +20627,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             var last_week = t.weekNumber(this.rule.wkst);
                             for (monthIdx = first_week; monthIdx < last_week; monthIdx++) validWeeks[monthIdx] = 1;
                         }
-                        for (var weekIdx = 0; weekIdx < this.by_data.BYWEEKNO.length && valid; weekIdx++) {
-                            weekno = this.by_data.BYWEEKNO[weekIdx];
-                            weekno < 52 ? valid &= validWeeks[weekIdx] : valid = 0;
-                        }
+                        for (var weekIdx = 0; weekIdx < this.by_data.BYWEEKNO.length && valid; weekIdx++) (weekno = this.by_data.BYWEEKNO[weekIdx]) < 52 ? valid &= validWeeks[weekIdx] : valid = 0;
                         valid ? delete parts.BYMONTH : delete parts.BYWEEKNO;
                     }
                     var partCount = Object.keys(parts).length;
@@ -20673,18 +20641,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         }
                     } else if (1 == partCount && "BYMONTHDAY" in parts) {
                         for (var monthdaykey in this.by_data.BYMONTHDAY) if (this.by_data.BYMONTHDAY.hasOwnProperty(monthdaykey)) {
-                            var t3 = this.dtstart.clone(), day_ = this.by_data.BYMONTHDAY[monthdaykey];
-                            if (day_ < 0) {
-                                daysInMonth = ICAL.Time.daysInMonth(t3.month, aYear);
-                                day_ = day_ + daysInMonth + 1;
-                            }
+                            var t3 = this.dtstart.clone();
+                            (day_ = this.by_data.BYMONTHDAY[monthdaykey]) < 0 && (day_ = day_ + (daysInMonth = ICAL.Time.daysInMonth(t3.month, aYear)) + 1), 
                             t3.day = day_, t3.year = aYear, t3.isDate = !0, this.days.push(t3.dayOfYear());
                         }
                     } else if (2 == partCount && "BYMONTHDAY" in parts && "BYMONTH" in parts) {
                         for (var monthkey in this.by_data.BYMONTH) if (this.by_data.BYMONTH.hasOwnProperty(monthkey)) {
                             var month_ = this.by_data.BYMONTH[monthkey], daysInMonth = ICAL.Time.daysInMonth(month_, aYear);
                             for (var monthdaykey in this.by_data.BYMONTHDAY) if (this.by_data.BYMONTHDAY.hasOwnProperty(monthdaykey)) {
-                                day_ = this.by_data.BYMONTHDAY[monthdaykey];
+                                var day_ = this.by_data.BYMONTHDAY[monthdaykey];
                                 day_ < 0 && (day_ = day_ + daysInMonth + 1), t.day = day_, t.month = month_, t.year = aYear, 
                                 t.isDate = !0, this.days.push(t.dayOfYear());
                             }
@@ -20722,7 +20687,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     } else if (2 == partCount && "BYDAY" in parts && "BYWEEKNO" in parts) {
                         var expandedDays = this.expand_by_day(aYear);
                         for (var daykey in expandedDays) if (expandedDays.hasOwnProperty(daykey)) {
-                            var day = expandedDays[daykey], tt = ICAL.Time.fromDayOfYear(day, aYear), weekno = tt.weekNumber(this.rule.wkst);
+                            var day = expandedDays[daykey], weekno = (tt = ICAL.Time.fromDayOfYear(day, aYear)).weekNumber(this.rule.wkst);
                             this.by_data.BYWEEKNO.indexOf(weekno) && this.days.push(day);
                         }
                     } else 3 == partCount && "BYDAY" in parts && "BYWEEKNO" in parts && "BYMONTHDAY" in parts || (this.days = 1 == partCount && "BYYEARDAY" in parts ? this.days.concat(this.by_data.BYYEARDAY) : []);
@@ -20736,7 +20701,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     var end_dow = tmp.dayOfWeek(), end_year_day = tmp.dayOfYear();
                     for (var daykey in this.by_data.BYDAY) if (this.by_data.BYDAY.hasOwnProperty(daykey)) {
                         var day = this.by_data.BYDAY[daykey], parts = this.ruleDayOfWeek(day), pos = parts[0], dow = parts[1];
-                        if (0 == pos) for (var tmp_start_doy = (dow + 7 - start_dow) % 7 + 1, doy = tmp_start_doy; doy <= end_year_day; doy += 7) days_list.push(doy); else if (pos > 0) {
+                        if (0 == pos) for (var doy = (dow + 7 - start_dow) % 7 + 1; doy <= end_year_day; doy += 7) days_list.push(doy); else if (pos > 0) {
                             var first;
                             first = dow >= start_dow ? dow - start_dow + 1 : dow - start_dow + 8, days_list.push(first + 7 * (pos - 1));
                         } else {
@@ -20887,8 +20852,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     if (component.hasProperty("rdate") && (this.ruleDates = this._extractDates(component, "rdate"), 
                     this.ruleDates[0] && this.ruleDates[0].compare(this.dtstart) < 0 ? (this.ruleDateInc = 0, 
                     this.last = this.ruleDates[0].clone()) : this.ruleDateInc = ICAL.helpers.binsearchInsert(this.ruleDates, this.last, compareTime), 
-                    this.ruleDate = this.ruleDates[this.ruleDateInc]), component.hasProperty("rrule")) for (var rule, iter, rules = component.getAllProperties("rrule"), i = 0, len = rules.length; i < len; i++) rule = rules[i].getFirstValue(), 
-                    iter = rule.iterator(this.dtstart), this.ruleIterators.push(iter), iter.next();
+                    this.ruleDate = this.ruleDates[this.ruleDateInc]), component.hasProperty("rrule")) for (var iter, rules = component.getAllProperties("rrule"), i = 0, len = rules.length; i < len; i++) iter = rules[i].getFirstValue().iterator(this.dtstart), 
+                    this.ruleIterators.push(iter), iter.next();
                     component.hasProperty("exdate") && (this.exDates = this._extractDates(component, "exdate"), 
                     this.exDateInc = ICAL.helpers.binsearchInsert(this.exDates, this.last, compareTime), 
                     this.exDate = this.exDates[this.exDateInc]);
@@ -20902,8 +20867,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 _nextRecurrenceIter: function() {
                     var iters = this.ruleIterators;
                     if (0 === iters.length) return null;
-                    for (var iter, iterTime, chosenIter, len = iters.length, iterIdx = 0; iterIdx < len; iterIdx++) iter = iters[iterIdx], 
-                    iterTime = iter.last, iter.completed ? (len--, 0 !== iterIdx && iterIdx--, iters.splice(iterIdx, 1)) : (!chosenIter || chosenIter.last.compare(iterTime) > 0) && (chosenIter = iter);
+                    for (var iter, iterTime, chosenIter, len = iters.length, iterIdx = 0; iterIdx < len; iterIdx++) iterTime = (iter = iters[iterIdx]).last, 
+                    iter.completed ? (len--, 0 !== iterIdx && iterIdx--, iters.splice(iterIdx, 1)) : (!chosenIter || chosenIter.last.compare(iterTime) > 0) && (chosenIter = iter);
                     return chosenIter;
                 }
             }, RecurExpansion;
@@ -20957,8 +20922,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                 original.zone = newStart.zone, startDiff = newStart.subtractDate(original), this._rangeExceptionCache[rangeExceptionId] = startDiff;
                             }
                             var start = occurrence.clone();
-                            start.zone = exception.startDate.zone, start.addDuration(startDiff), end = start.clone(), 
-                            end.addDuration(exception.duration), result.startDate = start, result.endDate = end;
+                            start.zone = exception.startDate.zone, start.addDuration(startDiff), (end = start.clone()).addDuration(exception.duration), 
+                            result.startDate = start, result.endDate = end;
                         } else (end = occurrence.clone()).addDuration(this.duration), result.endDate = end, 
                         result.startDate = occurrence, result.item = this;
                     }
@@ -21246,18 +21211,15 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             index > 0 ? array.splice(index, 1) : 0 === index && array.shift();
                         },
                         arrayGetDistinctValues: function(array) {
-                            array = array || [];
-                            for (var result = [], i = 0, j = array.length; i < j; i++) ko.utils.arrayIndexOf(result, array[i]) < 0 && result.push(array[i]);
+                            for (var result = [], i = 0, j = (array = array || []).length; i < j; i++) ko.utils.arrayIndexOf(result, array[i]) < 0 && result.push(array[i]);
                             return result;
                         },
                         arrayMap: function(array, mapping) {
-                            array = array || [];
-                            for (var result = [], i = 0, j = array.length; i < j; i++) result.push(mapping(array[i], i));
+                            for (var result = [], i = 0, j = (array = array || []).length; i < j; i++) result.push(mapping(array[i], i));
                             return result;
                         },
                         arrayFilter: function(array, predicate) {
-                            array = array || [];
-                            for (var result = [], i = 0, j = array.length; i < j; i++) predicate(array[i], i) && result.push(array[i]);
+                            for (var result = [], i = 0, j = (array = array || []).length; i < j; i++) predicate(array[i], i) && result.push(array[i]);
                             return result;
                         },
                         arrayPushAll: function(array, valuesToPush) {
@@ -21283,7 +21245,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             for (;domNode.firstChild; ) ko.removeNode(domNode.firstChild);
                         },
                         moveCleanedNodesToContainerElement: function(nodes) {
-                            for (var nodesArray = ko.utils.makeArray(nodes), templateDocument = nodesArray[0] && nodesArray[0].ownerDocument || document, container = templateDocument.createElement("div"), i = 0, j = nodesArray.length; i < j; i++) container.appendChild(ko.cleanNode(nodesArray[i]));
+                            for (var nodesArray = ko.utils.makeArray(nodes), container = (nodesArray[0] && nodesArray[0].ownerDocument || document).createElement("div"), i = 0, j = nodesArray.length; i < j; i++) container.appendChild(ko.cleanNode(nodesArray[i]));
                             return container;
                         },
                         cloneNodes: function(nodesArray, shouldCleanNodes) {
@@ -21446,8 +21408,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             return JSON.stringify(ko.utils.unwrapObservable(data), replacer, space);
                         },
                         postJson: function(urlOrForm, data, options) {
-                            options = options || {};
-                            var params = options.params || {}, includeFields = options.includeFields || this.fieldsIncludedWithJsonPost, url = urlOrForm;
+                            var params = (options = options || {}).params || {}, includeFields = options.includeFields || this.fieldsIncludedWithJsonPost, url = urlOrForm;
                             if ("object" == typeof urlOrForm && "form" === ko.utils.tagNameLower(urlOrForm)) {
                                 var originalForm = urlOrForm;
                                 url = originalForm.action;
@@ -21496,7 +21457,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 }), ko.utils.domData = new function() {
                     function getAll(node, createIfNotFound) {
                         var dataStoreKey = node[dataStoreKeyExpandoPropertyName];
-                        if (!dataStoreKey || "null" === dataStoreKey || !dataStore[dataStoreKey]) {
+                        if (!(dataStoreKey && "null" !== dataStoreKey && dataStore[dataStoreKey])) {
                             if (!createIfNotFound) return undefined;
                             dataStoreKey = node[dataStoreKeyExpandoPropertyName] = "ko" + uniqueId++, dataStore[dataStoreKey] = {};
                         }
@@ -21601,11 +21562,11 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         }
                         return elems;
                     }
-                    var none = [ 0, "", "" ], table = [ 1, "<table>", "</table>" ], tbody = [ 2, "<table><tbody>", "</tbody></table>" ], tr = [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ], select = [ 1, "<select multiple='multiple'>", "</select>" ], lookup = {
+                    var none = [ 0, "", "" ], table = [ 1, "<table>", "</table>" ], tr = [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ], select = [ 1, "<select multiple='multiple'>", "</select>" ], lookup = {
                         thead: table,
                         tbody: table,
                         tfoot: table,
-                        tr: tbody,
+                        tr: [ 2, "<table><tbody>", "</tbody></table>" ],
                         td: tr,
                         th: tr,
                         option: select,
@@ -21691,24 +21652,24 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     function scheduleTaskProcessing() {
                         ko.tasks.scheduler(scheduledProcess);
                     }
-                    var scheduler, taskQueue = [], taskQueueLength = 0, nextHandle = 1, nextIndexToProcess = 0;
-                    return scheduler = window.MutationObserver ? function(callback) {
-                        var div = document.createElement("div");
-                        return new MutationObserver(callback).observe(div, {
-                            attributes: !0
-                        }), function() {
-                            div.classList.toggle("foo");
-                        };
-                    }(scheduledProcess) : document && "onreadystatechange" in document.createElement("script") ? function(callback) {
-                        var script = document.createElement("script");
-                        script.onreadystatechange = function() {
-                            script.onreadystatechange = null, document.documentElement.removeChild(script), 
-                            script = null, callback();
-                        }, document.documentElement.appendChild(script);
-                    } : function(callback) {
-                        setTimeout(callback, 0);
-                    }, {
-                        scheduler: scheduler,
+                    var taskQueue = [], taskQueueLength = 0, nextHandle = 1, nextIndexToProcess = 0;
+                    return {
+                        scheduler: window.MutationObserver ? function(callback) {
+                            var div = document.createElement("div");
+                            return new MutationObserver(callback).observe(div, {
+                                attributes: !0
+                            }), function() {
+                                div.classList.toggle("foo");
+                            };
+                        }(scheduledProcess) : document && "onreadystatechange" in document.createElement("script") ? function(callback) {
+                            var script = document.createElement("script");
+                            script.onreadystatechange = function() {
+                                script.onreadystatechange = null, document.documentElement.removeChild(script), 
+                                script = null, callback();
+                            }, document.documentElement.appendChild(script);
+                        } : function(callback) {
+                            setTimeout(callback, 0);
+                        },
                         schedule: function(func) {
                             return taskQueueLength || scheduleTaskProcessing(), taskQueue[taskQueueLength++] = func, 
                             nextHandle++;
@@ -22369,8 +22330,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                     }
                                 } else if (47 === c && i && tok.length > 1) {
                                     var match = toks[i - 1].match(divisionLookBehind);
-                                    match && !keywordRegexLookBehind[match[0]] && (str = str.substr(str.indexOf(tok) + 1), 
-                                    (toks = str.match(bindingToken)).push(","), i = -1, tok = "/");
+                                    match && !keywordRegexLookBehind[match[0]] && ((toks = (str = str.substr(str.indexOf(tok) + 1)).match(bindingToken)).push(","), 
+                                    i = -1, tok = "/");
                                 } else 40 === c || 123 === c || 91 === c ? ++depth : 41 === c || 125 === c || 93 === c ? --depth : key || values.length || 34 !== c && 39 !== c || (tok = tok.slice(1, -1));
                                 values.push(tok);
                             }
@@ -22388,8 +22349,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                             }
                             makeValueAccessors && (val = "function(){return " + val + " }"), resultStrings.push("'" + key + "':" + val);
                         }
-                        bindingOptions = bindingOptions || {};
-                        var resultStrings = [], propertyAccessorResultStrings = [], makeValueAccessors = bindingOptions.valueAccessors, bindingParams = bindingOptions.bindingParams, keyValueArray = "string" == typeof bindingsStringOrKeyValueArray ? parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
+                        var resultStrings = [], propertyAccessorResultStrings = [], makeValueAccessors = (bindingOptions = bindingOptions || {}).valueAccessors, bindingParams = bindingOptions.bindingParams, keyValueArray = "string" == typeof bindingsStringOrKeyValueArray ? parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
                         return ko.utils.arrayForEach(keyValueArray, function(keyValue) {
                             processKeyValue(keyValue.key || keyValue.unknown, keyValue.value);
                         }), propertyAccessorResultStrings.length && processKeyValue("_ko_property_writers", "{" + propertyAccessorResultStrings.join(",") + " }"), 
@@ -23011,8 +22971,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     update: function(element, valueAccessor, allBindings) {
                         var value = ko.utils.unwrapObservable(valueAccessor()) || {};
                         ko.utils.objectForEach(value, function(attrName, attrValue) {
-                            attrValue = ko.utils.unwrapObservable(attrValue);
-                            var toRemove = !1 === attrValue || null === attrValue || attrValue === undefined;
+                            var toRemove = !1 === (attrValue = ko.utils.unwrapObservable(attrValue)) || null === attrValue || attrValue === undefined;
                             toRemove && element.removeAttribute(attrName), ko.utils.ieVersion <= 8 && attrName in attrHtmlToJavascriptMap ? (attrName = attrHtmlToJavascriptMap[attrName], 
                             toRemove ? element.removeAttribute(attrName) : element[attrName] = attrValue) : toRemove || element.setAttribute(attrName, attrValue.toString()), 
                             "name" === attrName && ko.utils.setElementName(element, toRemove ? "" : attrValue.toString());
@@ -23217,9 +23176,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         }), ko.utils.setDomNodeChildrenFromArrayMapping(element, filteredArray, optionForArrayItem, arrayToDomNodeChildrenOptions, callback), 
                         ko.dependencyDetection.ignore(function() {
                             if (valueAllowUnset) ko.selectExtensions.writeValue(element, ko.utils.unwrapObservable(allBindings.get("value")), !0); else {
-                                var selectionChanged;
-                                selectionChanged = multiple ? previousSelectedValues.length && selectedOptions().length < previousSelectedValues.length : previousSelectedValues.length && element.selectedIndex >= 0 ? ko.selectExtensions.readValue(element.options[element.selectedIndex]) !== previousSelectedValues[0] : previousSelectedValues.length || element.selectedIndex >= 0, 
-                                selectionChanged && ko.utils.triggerEvent(element, "change");
+                                (multiple ? previousSelectedValues.length && selectedOptions().length < previousSelectedValues.length : previousSelectedValues.length && element.selectedIndex >= 0 ? ko.selectExtensions.readValue(element.options[element.selectedIndex]) !== previousSelectedValues[0] : previousSelectedValues.length || element.selectedIndex >= 0) && ko.utils.triggerEvent(element, "change");
                             }
                         }), ko.utils.ensureSelectElementIsRenderedCorrectly(element), previousScrollTop && Math.abs(previousScrollTop - element.scrollTop) > 20 && (element.scrollTop = previousScrollTop);
                     }
@@ -23393,8 +23350,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     throw new Error("Override createJavaScriptEvaluatorBlock");
                 }, ko.templateEngine.prototype.makeTemplateSource = function(template, templateDocument) {
                     if ("string" == typeof template) {
-                        templateDocument = templateDocument || document;
-                        var elem = templateDocument.getElementById(template);
+                        var elem = (templateDocument = templateDocument || document).getElementById(template);
                         if (!elem) throw new Error("Cannot find template with ID " + template);
                         return new ko.templateSources.domElement(elem);
                     }
@@ -23499,8 +23455,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     ko.exportSymbol("templateSources.anonymousTemplate", ko.templateSources.anonymousTemplate);
                 }(), function() {
                     function invokeForEachNodeInContinuousRange(firstNode, lastNode, action) {
-                        for (var node, nextInQueue = firstNode, firstOutOfRangeNode = ko.virtualElements.nextSibling(lastNode); nextInQueue && (node = nextInQueue) !== firstOutOfRangeNode; ) nextInQueue = ko.virtualElements.nextSibling(node), 
-                        action(node, nextInQueue);
+                        for (var node, nextInQueue = firstNode, firstOutOfRangeNode = ko.virtualElements.nextSibling(lastNode); nextInQueue && (node = nextInQueue) !== firstOutOfRangeNode; ) action(node, nextInQueue = ko.virtualElements.nextSibling(node));
                     }
                     function activateBindingsOnContinuousNodeArray(continuousNodeArray, bindingContext) {
                         if (continuousNodeArray.length) {
@@ -23573,7 +23528,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                 var bindingContext = dataOrBindingContext && dataOrBindingContext instanceof ko.bindingContext ? dataOrBindingContext : new ko.bindingContext(dataOrBindingContext, null, null, null, {
                                     exportDependencies: !0
                                 }), templateName = resolveTemplateName(template, bindingContext.$data, bindingContext), renderedNodesArray = executeTemplate(targetNodeOrNodeArray, renderMode, templateName, bindingContext, options);
-                                "replaceNode" == renderMode && (targetNodeOrNodeArray = renderedNodesArray, firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray));
+                                "replaceNode" == renderMode && (firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray = renderedNodesArray));
                             }, null, {
                                 disposeWhen: whenToDispose,
                                 disposeWhenNodeIsRemoved: activelyDisposeWhenNodeIsRemoved
@@ -23656,10 +23611,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         } : options || {}, oldArray = oldArray || [], newArray = newArray || [], oldArray.length < newArray.length ? compareSmallArrayToBigArray(oldArray, newArray, statusNotInOld, statusNotInNew, options) : compareSmallArrayToBigArray(newArray, oldArray, statusNotInNew, statusNotInOld, options);
                     }
                     function compareSmallArrayToBigArray(smlArray, bigArray, statusNotInSml, statusNotInBig, options) {
-                        var smlIndex, bigIndex, thisRow, lastRow, bigIndexMaxForRow, bigIndexMinForRow, myMin = Math.min, myMax = Math.max, editDistanceMatrix = [], smlIndexMax = smlArray.length, bigIndexMax = bigArray.length, compareRange = bigIndexMax - smlIndexMax || 1, maxDistance = smlIndexMax + bigIndexMax + 1;
+                        var smlIndex, bigIndex, thisRow, lastRow, bigIndexMaxForRow, myMin = Math.min, myMax = Math.max, editDistanceMatrix = [], smlIndexMax = smlArray.length, bigIndexMax = bigArray.length, compareRange = bigIndexMax - smlIndexMax || 1, maxDistance = smlIndexMax + bigIndexMax + 1;
                         for (smlIndex = 0; smlIndex <= smlIndexMax; smlIndex++) for (lastRow = thisRow, 
                         editDistanceMatrix.push(thisRow = []), bigIndexMaxForRow = myMin(bigIndexMax, smlIndex + compareRange), 
-                        bigIndexMinForRow = myMax(0, smlIndex - 1), bigIndex = bigIndexMinForRow; bigIndex <= bigIndexMaxForRow; bigIndex++) if (bigIndex) if (smlIndex) if (smlArray[smlIndex - 1] === bigArray[bigIndex - 1]) thisRow[bigIndex] = lastRow[bigIndex - 1]; else {
+                        bigIndex = myMax(0, smlIndex - 1); bigIndex <= bigIndexMaxForRow; bigIndex++) if (bigIndex) if (smlIndex) if (smlArray[smlIndex - 1] === bigArray[bigIndex - 1]) thisRow[bigIndex] = lastRow[bigIndex - 1]; else {
                             var northDistance = lastRow[bigIndex] || maxDistance, westDistance = thisRow[bigIndex - 1] || maxDistance;
                             thisRow[bigIndex] = myMin(northDistance, westDistance) + 1;
                         } else thisRow[bigIndex] = bigIndex + 1; else thisRow[bigIndex] = smlIndex + 1;
@@ -23884,8 +23839,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var thisCache, i, isNode = elem.nodeType, cache = isNode ? jQuery.cache : elem, id = isNode ? elem[jQuery.expando] : jQuery.expando;
                 if (cache[id]) {
                     if (name && (thisCache = pvt ? cache[id] : cache[id].data)) {
-                        jQuery.isArray(name) ? name = name.concat(jQuery.map(name, jQuery.camelCase)) : name in thisCache ? name = [ name ] : (name = jQuery.camelCase(name), 
-                        name = name in thisCache ? [ name ] : name.split(" ")), i = name.length;
+                        i = (name = jQuery.isArray(name) ? name.concat(jQuery.map(name, jQuery.camelCase)) : name in thisCache ? [ name ] : (name = jQuery.camelCase(name)) in thisCache ? [ name ] : name.split(" ")).length;
                         for (;i--; ) delete thisCache[name[i]];
                         if (pvt ? !isEmptyDataObject(thisCache) : !jQuery.isEmptyObject(thisCache)) return;
                     }
@@ -23961,8 +23915,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }
         function defaultDisplay(nodeName) {
             var doc = document, display = elemdisplay[nodeName];
-            return display || ("none" !== (display = actualDisplay(nodeName, doc)) && display || (iframe = (iframe || jQuery("<iframe frameborder='0' width='0' height='0'/>")).appendTo(doc.documentElement), 
-            (doc = (iframe[0].contentWindow || iframe[0].contentDocument).document).write(), 
+            return display || ("none" !== (display = actualDisplay(nodeName, doc)) && display || ((doc = ((iframe = (iframe || jQuery("<iframe frameborder='0' width='0' height='0'/>")).appendTo(doc.documentElement))[0].contentWindow || iframe[0].contentDocument).document).write(), 
             doc.close(), display = actualDisplay(nodeName, doc), iframe.detach()), elemdisplay[nodeName] = display), 
             display;
         }
@@ -24020,8 +23973,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var which, attrs = {
                 height: type
             }, i = 0;
-            for (includeWidth = includeWidth ? 1 : 0; i < 4; i += 2 - includeWidth) which = cssExpand[i], 
-            attrs["margin" + which] = attrs["padding" + which] = type;
+            for (includeWidth = includeWidth ? 1 : 0; i < 4; i += 2 - includeWidth) attrs["margin" + (which = cssExpand[i])] = attrs["padding" + which] = type;
             return includeWidth && (attrs.opacity = attrs.width = type), attrs;
         }
         function createTween(value, prop, animation) {
@@ -24077,7 +24029,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 delete tick.elem;
             }), tick = function() {
                 if (stopped) return !1;
-                for (var currentTime = fxNow || createFxNow(), remaining = Math.max(0, animation.startTime + animation.duration - currentTime), temp = remaining / animation.duration || 0, percent = 1 - temp, index = 0, length = animation.tweens.length; index < length; index++) animation.tweens[index].run(percent);
+                for (var currentTime = fxNow || createFxNow(), remaining = Math.max(0, animation.startTime + animation.duration - currentTime), percent = 1 - (remaining / animation.duration || 0), index = 0, length = animation.tweens.length; index < length; index++) animation.tweens[index].run(percent);
                 return deferred.notifyWith(elem, [ animation, percent, remaining ]), percent < 1 && length ? remaining : (deferred.resolveWith(elem, [ animation ]), 
                 !1);
             }, animation = deferred.promise({
@@ -24252,7 +24204,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             for ("boolean" == typeof target && (deep = target, target = arguments[i] || {}, 
             i++), "object" == typeof target || jQuery.isFunction(target) || (target = {}), i === length && (target = this, 
             i--); i < length; i++) if (null != (options = arguments[i])) for (name in options) src = target[name], 
-            copy = options[name], target !== copy && (deep && copy && (jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy))) ? (copyIsArray ? (copyIsArray = !1, 
+            target !== (copy = options[name]) && (deep && copy && (jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy))) ? (copyIsArray ? (copyIsArray = !1, 
             clone = src && jQuery.isArray(src) ? src : []) : clone = src && jQuery.isPlainObject(src) ? src : {}, 
             target[name] = jQuery.extend(deep, clone, copy)) : void 0 !== copy && (target[name] = copy));
             return target;
@@ -24341,8 +24293,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 return matches;
             },
             map: function(elems, callback, arg) {
-                var value, i = 0, length = elems.length, isArray = isArraylike(elems), ret = [];
-                if (isArray) for (;i < length; i++) null != (value = callback(elems[i], i, arg)) && ret.push(value); else for (i in elems) null != (value = callback(elems[i], i, arg)) && ret.push(value);
+                var value, i = 0, length = elems.length, ret = [];
+                if (isArraylike(elems)) for (;i < length; i++) null != (value = callback(elems[i], i, arg)) && ret.push(value); else for (i in elems) null != (value = callback(elems[i], i, arg)) && ret.push(value);
                 return concat.apply([], ret);
             },
             guid: 1,
@@ -24716,7 +24668,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     } else if (3 === nodeType || 4 === nodeType) return elem.nodeValue;
                 } else for (;node = elem[i++]; ) ret += getText(node);
                 return ret;
-            }, Expr = Sizzle.selectors = {
+            }, (Expr = Sizzle.selectors = {
                 cacheLength: 50,
                 createPseudo: markFunction,
                 match: matchExpr,
@@ -24791,9 +24743,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                                     return !0;
                                 }
                                 if (start = [ forward ? parent.firstChild : parent.lastChild ], forward && useCache) {
-                                    for (outerCache = parent[expando] || (parent[expando] = {}), cache = outerCache[type] || [], 
-                                    nodeIndex = cache[0] === dirruns && cache[1], diff = cache[0] === dirruns && cache[2], 
-                                    node = nodeIndex && parent.childNodes[nodeIndex]; node = ++nodeIndex && node && node[dir] || (diff = nodeIndex = 0) || start.pop(); ) if (1 === node.nodeType && ++diff && node === elem) {
+                                    for (nodeIndex = (cache = (outerCache = parent[expando] || (parent[expando] = {}))[type] || [])[0] === dirruns && cache[1], 
+                                    diff = cache[0] === dirruns && cache[2], node = nodeIndex && parent.childNodes[nodeIndex]; node = ++nodeIndex && node && node[dir] || (diff = nodeIndex = 0) || start.pop(); ) if (1 === node.nodeType && ++diff && node === elem) {
                                         outerCache[type] = [ dirruns, nodeIndex, diff ];
                                         break;
                                     }
@@ -24807,8 +24758,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         var args, fn = Expr.pseudos[pseudo] || Expr.setFilters[pseudo.toLowerCase()] || Sizzle.error("unsupported pseudo: " + pseudo);
                         return fn[expando] ? fn(argument) : fn.length > 1 ? (args = [ pseudo, pseudo, "", argument ], 
                         Expr.setFilters.hasOwnProperty(pseudo.toLowerCase()) ? markFunction(function(seed, matches) {
-                            for (var idx, matched = fn(seed, argument), i = matched.length; i--; ) idx = indexOf.call(seed, matched[i]), 
-                            seed[idx] = !(matches[idx] = matched[i]);
+                            for (var idx, matched = fn(seed, argument), i = matched.length; i--; ) seed[idx = indexOf.call(seed, matched[i])] = !(matches[idx] = matched[i]);
                         }) : function(elem) {
                             return fn(elem, 0, args);
                         }) : fn;
@@ -24913,7 +24863,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         return matchIndexes;
                     })
                 }
-            }, Expr.pseudos.nth = Expr.pseudos.eq;
+            }).pseudos.nth = Expr.pseudos.eq;
             for (i in {
                 radio: !0,
                 checkbox: !0,
@@ -24938,8 +24888,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             compile = Sizzle.compile = function(selector, group) {
                 var i, setMatchers = [], elementMatchers = [], cached = compilerCache[selector + " "];
                 if (!cached) {
-                    for (group || (group = tokenize(selector)), i = group.length; i--; ) cached = matcherFromTokens(group[i]), 
-                    cached[expando] ? setMatchers.push(cached) : elementMatchers.push(cached);
+                    for (group || (group = tokenize(selector)), i = group.length; i--; ) (cached = matcherFromTokens(group[i]))[expando] ? setMatchers.push(cached) : elementMatchers.push(cached);
                     cached = compilerCache(selector, matcherFromGroupMatchers(elementMatchers, setMatchers));
                 }
                 return cached;
@@ -25098,8 +25047,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         });
         var rnotwhite = /\S+/g, optionsCache = {};
         jQuery.Callbacks = function(options) {
-            options = "string" == typeof options ? optionsCache[options] || createOptions(options) : jQuery.extend({}, options);
-            var firing, memory, fired, firingLength, firingIndex, firingStart, list = [], stack = !options.once && [], fire = function(data) {
+            var firing, memory, fired, firingLength, firingIndex, firingStart, list = [], stack = !(options = "string" == typeof options ? optionsCache[options] || createOptions(options) : jQuery.extend({}, options)).once && [], fire = function(data) {
                 for (memory = options.memory && data, fired = !0, firingIndex = firingStart || 0, 
                 firingStart = 0, firingLength = list.length, firing = !0; list && firingIndex < firingLength; firingIndex++) if (!1 === list[firingIndex].apply(data[0], data[1]) && options.stopOnFalse) {
                     memory = !1;
@@ -25145,7 +25093,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     return !stack;
                 },
                 fireWith: function(context, args) {
-                    return !list || fired && !stack || (args = args || [], args = [ context, args.slice ? args.slice() : args ], 
+                    return !list || fired && !stack || (args = [ context, (args = args || []).slice ? args.slice() : args ], 
                     firing ? stack.push(args) : fire(args)), this;
                 },
                 fire: function() {
@@ -25244,7 +25192,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         for (i in jQuery(support)) break;
         support.ownLast = "0" !== i, support.inlineBlockNeedsLayout = !1, jQuery(function() {
             var container, div, body = document.getElementsByTagName("body")[0];
-            body && (container = document.createElement("div"), container.style.cssText = "border:0;width:0;height:0;position:absolute;top:0;left:-9999px;margin-top:1px", 
+            body && ((container = document.createElement("div")).style.cssText = "border:0;width:0;height:0;position:absolute;top:0;left:-9999px;margin-top:1px", 
             div = document.createElement("div"), body.appendChild(container).appendChild(div), 
             typeof div.style.zoom !== strundefined && (div.style.cssText = "border:0;margin:0;width:1px;padding:1px;display:inline;zoom:1", 
             (support.inlineBlockNeedsLayout = 3 === div.offsetWidth) && (body.style.zoom = 1)), 
@@ -25292,8 +25240,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var i, name, data, elem = this[0], attrs = elem && elem.attributes;
                 if (void 0 === key) {
                     if (this.length && (data = jQuery.data(elem), 1 === elem.nodeType && !jQuery._data(elem, "parsedAttrs"))) {
-                        for (i = attrs.length; i--; ) 0 === (name = attrs[i].name).indexOf("data-") && (name = jQuery.camelCase(name.slice(5)), 
-                        dataAttr(elem, name, data[name]));
+                        for (i = attrs.length; i--; ) 0 === (name = attrs[i].name).indexOf("data-") && dataAttr(elem, name = jQuery.camelCase(name.slice(5)), data[name]);
                         jQuery._data(elem, "parsedAttrs", !0);
                     }
                     return data;
@@ -25406,12 +25353,12 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             add: function(elem, types, handler, data, selector) {
                 var tmp, events, t, handleObjIn, special, eventHandle, handleObj, handlers, type, namespaces, origType, elemData = jQuery._data(elem);
                 if (elemData) {
-                    for (handler.handler && (handleObjIn = handler, handler = handleObjIn.handler, selector = handleObjIn.selector), 
+                    for (handler.handler && (handler = (handleObjIn = handler).handler, selector = handleObjIn.selector), 
                     handler.guid || (handler.guid = jQuery.guid++), (events = elemData.events) || (events = elemData.events = {}), 
-                    (eventHandle = elemData.handle) || (eventHandle = elemData.handle = function(e) {
+                    (eventHandle = elemData.handle) || ((eventHandle = elemData.handle = function(e) {
                         return typeof jQuery === strundefined || e && jQuery.event.triggered === e.type ? void 0 : jQuery.event.dispatch.apply(eventHandle.elem, arguments);
-                    }, eventHandle.elem = elem), types = (types || "").match(rnotwhite) || [ "" ], t = types.length; t--; ) tmp = rtypenamespace.exec(types[t]) || [], 
-                    type = origType = tmp[1], namespaces = (tmp[2] || "").split(".").sort(), type && (special = jQuery.event.special[type] || {}, 
+                    }).elem = elem), t = (types = (types || "").match(rnotwhite) || [ "" ]).length; t--; ) type = origType = (tmp = rtypenamespace.exec(types[t]) || [])[1], 
+                    namespaces = (tmp[2] || "").split(".").sort(), type && (special = jQuery.event.special[type] || {}, 
                     type = (selector ? special.delegateType : special.bindType) || type, special = jQuery.event.special[type] || {}, 
                     handleObj = jQuery.extend({
                         type: type,
@@ -25422,7 +25369,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         selector: selector,
                         needsContext: selector && jQuery.expr.match.needsContext.test(selector),
                         namespace: namespaces.join(".")
-                    }, handleObjIn), (handlers = events[type]) || (handlers = events[type] = [], handlers.delegateCount = 0, 
+                    }, handleObjIn), (handlers = events[type]) || ((handlers = events[type] = []).delegateCount = 0, 
                     special.setup && !1 !== special.setup.call(elem, data, namespaces, eventHandle) || (elem.addEventListener ? elem.addEventListener(type, eventHandle, !1) : elem.attachEvent && elem.attachEvent("on" + type, eventHandle))), 
                     special.add && (special.add.call(elem, handleObj), handleObj.handler.guid || (handleObj.handler.guid = handler.guid)), 
                     selector ? handlers.splice(handlers.delegateCount++, 0, handleObj) : handlers.push(handleObj), 
@@ -25433,10 +25380,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             remove: function(elem, types, handler, selector, mappedTypes) {
                 var j, handleObj, tmp, origCount, t, events, special, handlers, type, namespaces, origType, elemData = jQuery.hasData(elem) && jQuery._data(elem);
                 if (elemData && (events = elemData.events)) {
-                    for (types = (types || "").match(rnotwhite) || [ "" ], t = types.length; t--; ) if (tmp = rtypenamespace.exec(types[t]) || [], 
+                    for (t = (types = (types || "").match(rnotwhite) || [ "" ]).length; t--; ) if (tmp = rtypenamespace.exec(types[t]) || [], 
                     type = origType = tmp[1], namespaces = (tmp[2] || "").split(".").sort(), type) {
-                        for (special = jQuery.event.special[type] || {}, type = (selector ? special.delegateType : special.bindType) || type, 
-                        handlers = events[type] || [], tmp = tmp[2] && new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)"), 
+                        for (special = jQuery.event.special[type] || {}, handlers = events[type = (selector ? special.delegateType : special.bindType) || type] || [], 
+                        tmp = tmp[2] && new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)"), 
                         origCount = j = handlers.length; j--; ) handleObj = handlers[j], !mappedTypes && origType !== handleObj.origType || handler && handler.guid !== handleObj.guid || tmp && !tmp.test(handleObj.namespace) || selector && selector !== handleObj.selector && ("**" !== selector || !handleObj.selector) || (handlers.splice(j, 1), 
                         handleObj.selector && handlers.delegateCount--, special.remove && special.remove.call(elem, handleObj));
                         origCount && !handlers.length && (special.teardown && !1 !== special.teardown.call(elem, namespaces, elemData.handle) || jQuery.removeEvent(elem, type, elemData.handle), 
@@ -25447,9 +25394,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             },
             trigger: function(event, data, elem, onlyHandlers) {
                 var handle, ontype, cur, bubbleType, special, tmp, i, eventPath = [ elem || document ], type = hasOwn.call(event, "type") ? event.type : event, namespaces = hasOwn.call(event, "namespace") ? event.namespace.split(".") : [];
-                if (cur = tmp = elem = elem || document, 3 !== elem.nodeType && 8 !== elem.nodeType && !rfocusMorph.test(type + jQuery.event.triggered) && (type.indexOf(".") >= 0 && (namespaces = type.split("."), 
-                type = namespaces.shift(), namespaces.sort()), ontype = type.indexOf(":") < 0 && "on" + type, 
-                event = event[jQuery.expando] ? event : new jQuery.Event(type, "object" == typeof event && event), 
+                if (cur = tmp = elem = elem || document, 3 !== elem.nodeType && 8 !== elem.nodeType && !rfocusMorph.test(type + jQuery.event.triggered) && (type.indexOf(".") >= 0 && (type = (namespaces = type.split(".")).shift(), 
+                namespaces.sort()), ontype = type.indexOf(":") < 0 && "on" + type, event = event[jQuery.expando] ? event : new jQuery.Event(type, "object" == typeof event && event), 
                 event.isTrigger = onlyHandlers ? 2 : 3, event.namespace = namespaces.join("."), 
                 event.namespace_re = event.namespace ? new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, 
                 event.result = void 0, event.target || (event.target = elem), data = null == data ? [ event ] : jQuery.makeArray(data, [ event ]), 
@@ -25464,7 +25410,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     (handle = ontype && cur[ontype]) && handle.apply && jQuery.acceptData(cur) && (event.result = handle.apply(cur, data), 
                     !1 === event.result && event.preventDefault());
                     if (event.type = type, !onlyHandlers && !event.isDefaultPrevented() && (!special._default || !1 === special._default.apply(eventPath.pop(), data)) && jQuery.acceptData(elem) && ontype && elem[type] && !jQuery.isWindow(elem)) {
-                        tmp = elem[ontype], tmp && (elem[ontype] = null), jQuery.event.triggered = type;
+                        (tmp = elem[ontype]) && (elem[ontype] = null), jQuery.event.triggered = type;
                         try {
                             elem[type]();
                         } catch (e) {}
@@ -25487,8 +25433,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             handlers: function(event, handlers) {
                 var sel, handleObj, matches, i, handlerQueue = [], delegateCount = handlers.delegateCount, cur = event.target;
                 if (delegateCount && cur.nodeType && (!event.button || "click" !== event.type)) for (;cur != this; cur = cur.parentNode || this) if (1 === cur.nodeType && (!0 !== cur.disabled || "click" !== event.type)) {
-                    for (matches = [], i = 0; i < delegateCount; i++) handleObj = handlers[i], sel = handleObj.selector + " ", 
-                    void 0 === matches[sel] && (matches[sel] = handleObj.needsContext ? jQuery(sel, this).index(cur) >= 0 : jQuery.find(sel, this, null, [ cur ]).length), 
+                    for (matches = [], i = 0; i < delegateCount; i++) void 0 === matches[sel = (handleObj = handlers[i]).selector + " "] && (matches[sel] = handleObj.needsContext ? jQuery(sel, this).index(cur) >= 0 : jQuery.find(sel, this, null, [ cur ]).length), 
                     matches[sel] && matches.push(handleObj);
                     matches.length && handlerQueue.push({
                         elem: cur,
@@ -25505,7 +25450,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var i, prop, copy, type = event.type, originalEvent = event, fixHook = this.fixHooks[type];
                 for (fixHook || (this.fixHooks[type] = fixHook = rmouseEvent.test(type) ? this.mouseHooks : rkeyEvent.test(type) ? this.keyHooks : {}), 
                 copy = fixHook.props ? this.props.concat(fixHook.props) : this.props, event = new jQuery.Event(originalEvent), 
-                i = copy.length; i--; ) prop = copy[i], event[prop] = originalEvent[prop];
+                i = copy.length; i--; ) event[prop = copy[i]] = originalEvent[prop];
                 return event.target || (event.target = originalEvent.srcElement || document), 3 === event.target.nodeType && (event.target = event.target.parentNode), 
                 event.metaKey = !!event.metaKey, fixHook.filter ? fixHook.filter(event, originalEvent) : event;
             },
@@ -25522,8 +25467,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 props: "button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
                 filter: function(event, original) {
                     var body, eventDoc, doc, button = original.button, fromElement = original.fromElement;
-                    return null == event.pageX && null != original.clientX && (eventDoc = event.target.ownerDocument || document, 
-                    doc = eventDoc.documentElement, body = eventDoc.body, event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0), 
+                    return null == event.pageX && null != original.clientX && (doc = (eventDoc = event.target.ownerDocument || document).documentElement, 
+                    body = eventDoc.body, event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0), 
                     event.pageY = original.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0)), 
                     !event.relatedTarget && fromElement && (event.relatedTarget = fromElement === event.target ? original.toElement : fromElement), 
                     event.which || void 0 === button || (event.which = 1 & button ? 1 : 2 & button ? 3 : 4 & button ? 2 : 0), 
@@ -25678,9 +25623,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 }
                 if (null == data && null == fn ? (fn = selector, data = selector = void 0) : null == fn && ("string" == typeof selector ? (fn = data, 
                 data = void 0) : (fn = data, data = selector, selector = void 0)), !1 === fn) fn = returnFalse; else if (!fn) return this;
-                return 1 === one && (origFn = fn, fn = function(event) {
+                return 1 === one && (origFn = fn, (fn = function(event) {
                     return jQuery().off(event), origFn.apply(this, arguments);
-                }, fn.guid = origFn.guid || (origFn.guid = jQuery.guid++)), this.each(function() {
+                }).guid = origFn.guid || (origFn.guid = jQuery.guid++)), this.each(function() {
                     jQuery.event.add(this, types, fn, data, selector);
                 });
             },
@@ -25740,8 +25685,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     wrap = wrapMap[tag] || wrapMap._default, tmp.innerHTML = wrap[1] + elem.replace(rxhtmlTag, "<$1></$2>") + wrap[2], 
                     j = wrap[0]; j--; ) tmp = tmp.lastChild;
                     if (!support.leadingWhitespace && rleadingWhitespace.test(elem) && nodes.push(context.createTextNode(rleadingWhitespace.exec(elem)[0])), 
-                    !support.tbody) for (elem = "table" !== tag || rtbody.test(elem) ? "<table>" !== wrap[1] || rtbody.test(elem) ? 0 : tmp : tmp.firstChild, 
-                    j = elem && elem.childNodes.length; j--; ) jQuery.nodeName(tbody = elem.childNodes[j], "tbody") && !tbody.childNodes.length && elem.removeChild(tbody);
+                    !support.tbody) for (j = (elem = "table" !== tag || rtbody.test(elem) ? "<table>" !== wrap[1] || rtbody.test(elem) ? 0 : tmp : tmp.firstChild) && elem.childNodes.length; j--; ) jQuery.nodeName(tbody = elem.childNodes[j], "tbody") && !tbody.childNodes.length && elem.removeChild(tbody);
                     for (jQuery.merge(nodes, tmp.childNodes), tmp.textContent = ""; tmp.firstChild; ) tmp.removeChild(tmp.firstChild);
                     tmp = safe.lastChild;
                 } else nodes.push(context.createTextNode(elem));
@@ -25841,7 +25785,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 if (l && (fragment = jQuery.buildFragment(args, this[0].ownerDocument, !1, this), 
                 first = fragment.firstChild, 1 === fragment.childNodes.length && (fragment = first), 
                 first)) {
-                    for (scripts = jQuery.map(getAll(fragment, "script"), disableScript), hasScripts = scripts.length; i < l; i++) node = fragment, 
+                    for (hasScripts = (scripts = jQuery.map(getAll(fragment, "script"), disableScript)).length; i < l; i++) node = fragment, 
                     i !== iNoClone && (node = jQuery.clone(node, !0, !0), hasScripts && jQuery.merge(scripts, getAll(node, "script"))), 
                     callback.call(this[i], node, i);
                     if (hasScripts) for (doc = scripts[scripts.length - 1].ownerDocument, jQuery.map(scripts, restoreScript), 
@@ -25867,7 +25811,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         !function() {
             var a, shrinkWrapBlocksVal, div = document.createElement("div");
             div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-            a = div.getElementsByTagName("a")[0], a.style.cssText = "float:left;opacity:.5", 
+            (a = div.getElementsByTagName("a")[0]).style.cssText = "float:left;opacity:.5", 
             support.opacity = /^0.5/.test(a.style.opacity), support.cssFloat = !!a.style.cssFloat, 
             div.style.backgroundClip = "content-box", div.cloneNode(!0).style.backgroundClip = "", 
             support.clearCloneStyle = "content-box" === div.style.backgroundClip, a = div = null, 
@@ -25900,10 +25844,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }, curCSS = function(elem, name, computed) {
             var left, rs, rsLeft, ret, style = elem.style;
             return computed = computed || getStyles(elem), null == (ret = computed ? computed[name] : void 0) && style && style[name] && (ret = style[name]), 
-            rnumnonpx.test(ret) && !rposition.test(name) && (left = style.left, rs = elem.runtimeStyle, 
-            (rsLeft = rs && rs.left) && (rs.left = elem.currentStyle.left), style.left = "fontSize" === name ? "1em" : ret, 
-            ret = style.pixelLeft + "px", style.left = left, rsLeft && (rs.left = rsLeft)), 
-            void 0 === ret ? ret : ret + "" || "auto";
+            rnumnonpx.test(ret) && !rposition.test(name) && (left = style.left, (rsLeft = (rs = elem.runtimeStyle) && rs.left) && (rs.left = elem.currentStyle.left), 
+            style.left = "fontSize" === name ? "1em" : ret, ret = style.pixelLeft + "px", style.left = left, 
+            rsLeft && (rs.left = rsLeft)), void 0 === ret ? ret : ret + "" || "auto";
         }), function() {
             function computeStyleTests() {
                 var container, div, body = document.getElementsByTagName("body")[0];
@@ -25922,7 +25865,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             }
             var a, reliableHiddenOffsetsVal, boxSizingVal, boxSizingReliableVal, pixelPositionVal, reliableMarginRightVal, div = document.createElement("div"), containerStyles = "border:0;width:0;height:0;position:absolute;top:0;left:-9999px";
             div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-            a = div.getElementsByTagName("a")[0], a.style.cssText = "float:left;opacity:.5", 
+            (a = div.getElementsByTagName("a")[0]).style.cssText = "float:left;opacity:.5", 
             support.opacity = /^0.5/.test(a.style.opacity), support.cssFloat = !!a.style.cssFloat, 
             div.style.backgroundClip = "content-box", div.cloneNode(!0).style.backgroundClip = "", 
             support.clearCloneStyle = "content-box" === div.style.backgroundClip, a = div = null, 
@@ -25953,7 +25896,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                         if (!(body = document.getElementsByTagName("body")[0])) return;
                         container = document.createElement("div"), div = document.createElement("div"), 
                         container.style.cssText = containerStyles, body.appendChild(container).appendChild(div), 
-                        marginDiv = div.appendChild(document.createElement("div")), marginDiv.style.cssText = div.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;padding:0;margin:0;border:0", 
+                        (marginDiv = div.appendChild(document.createElement("div"))).style.cssText = div.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;padding:0;margin:0;border:0", 
                         marginDiv.style.marginRight = marginDiv.style.width = "0", div.style.width = "1px", 
                         reliableMarginRightVal = !parseFloat((window.getComputedStyle(marginDiv, null) || {}).marginRight), 
                         body.removeChild(container);
@@ -26125,7 +26068,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 if (start && start[3] !== unit) {
                     unit = unit || start[3], parts = parts || [], start = +target || 1;
                     do {
-                        scale = scale || ".5", start /= scale, jQuery.style(tween.elem, prop, start + unit);
+                        start /= scale = scale || ".5", jQuery.style(tween.elem, prop, start + unit);
                     } while (scale !== (scale = tween.cur() / target) && 1 !== scale && --maxIterations);
                 }
                 return parts && (start = tween.start = +start || +target || 0, tween.unit = unit, 
@@ -26236,11 +26179,10 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         }, function() {
             var a, input, select, opt, div = document.createElement("div");
             div.setAttribute("className", "t"), div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-            a = div.getElementsByTagName("a")[0], select = document.createElement("select"), 
-            opt = select.appendChild(document.createElement("option")), input = div.getElementsByTagName("input")[0], 
-            a.style.cssText = "top:1px", support.getSetAttribute = "t" !== div.className, support.style = /top/.test(a.getAttribute("style")), 
-            support.hrefNormalized = "/a" === a.getAttribute("href"), support.checkOn = !!input.value, 
-            support.optSelected = opt.selected, support.enctype = !!document.createElement("form").enctype, 
+            a = div.getElementsByTagName("a")[0], opt = (select = document.createElement("select")).appendChild(document.createElement("option")), 
+            input = div.getElementsByTagName("input")[0], a.style.cssText = "top:1px", support.getSetAttribute = "t" !== div.className, 
+            support.style = /top/.test(a.getAttribute("style")), support.hrefNormalized = "/a" === a.getAttribute("href"), 
+            support.checkOn = !!input.value, support.optSelected = opt.selected, support.enctype = !!document.createElement("form").enctype, 
             select.disabled = !0, support.optDisabled = !opt.disabled, (input = document.createElement("input")).setAttribute("value", ""), 
             support.input = "" === input.getAttribute("value"), input.value = "t", input.setAttribute("type", "radio"), 
             support.radioValue = "t" === input.value, a = input = select = opt = div = null;
@@ -26251,8 +26193,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 {
                     if (arguments.length) return isFunction = jQuery.isFunction(value), this.each(function(i) {
                         var val;
-                        1 === this.nodeType && (val = isFunction ? value.call(this, i, jQuery(this).val()) : value, 
-                        null == val ? val = "" : "number" == typeof val ? val += "" : jQuery.isArray(val) && (val = jQuery.map(val, function(value) {
+                        1 === this.nodeType && (null == (val = isFunction ? value.call(this, i, jQuery(this).val()) : value) ? val = "" : "number" == typeof val ? val += "" : jQuery.isArray(val) && (val = jQuery.map(val, function(value) {
                             return null == value ? "" : value + "";
                         })), (hooks = jQuery.valHooks[this.type] || jQuery.valHooks[this.nodeName.toLowerCase()]) && "set" in hooks && void 0 !== hooks.set(this, val, "value") || (this.value = val));
                     });
@@ -26499,8 +26440,8 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
             var xml, tmp;
             if (!data || "string" != typeof data) return null;
             try {
-                window.DOMParser ? (tmp = new DOMParser(), xml = tmp.parseFromString(data, "text/xml")) : (xml = new ActiveXObject("Microsoft.XMLDOM"), 
-                xml.async = "false", xml.loadXML(data));
+                window.DOMParser ? (tmp = new DOMParser(), xml = tmp.parseFromString(data, "text/xml")) : ((xml = new ActiveXObject("Microsoft.XMLDOM")).async = "false", 
+                xml.loadXML(data));
             } catch (e) {
                 xml = void 0;
             }
@@ -26511,7 +26452,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         try {
             ajaxLocation = location.href;
         } catch (e) {
-            ajaxLocation = document.createElement("a"), ajaxLocation.href = "", ajaxLocation = ajaxLocation.href;
+            (ajaxLocation = document.createElement("a")).href = "", ajaxLocation = ajaxLocation.href;
         }
         ajaxLocParts = rurl.exec(ajaxLocation.toLowerCase()) || [], jQuery.extend({
             active: 0,
@@ -26567,7 +26508,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                     isSuccess ? (s.ifModified && ((modified = jqXHR.getResponseHeader("Last-Modified")) && (jQuery.lastModified[cacheURL] = modified), 
                     (modified = jqXHR.getResponseHeader("etag")) && (jQuery.etag[cacheURL] = modified)), 
                     204 === status || "HEAD" === s.type ? statusText = "nocontent" : 304 === status ? statusText = "notmodified" : (statusText = response.state, 
-                    success = response.data, error = response.error, isSuccess = !error)) : (error = statusText, 
+                    success = response.data, isSuccess = !(error = response.error))) : (error = statusText, 
                     !status && statusText || (statusText = "error", status < 0 && (status = 0))), jqXHR.status = status, 
                     jqXHR.statusText = (nativeStatusText || statusText) + "", isSuccess ? deferred.resolveWith(callbackContext, [ success, statusText, jqXHR ]) : deferred.rejectWith(callbackContext, [ jqXHR, statusText, error ]), 
                     jqXHR.statusCode(statusCode), statusCode = void 0, fireGlobals && globalEventContext.trigger(isSuccess ? "ajaxSuccess" : "ajaxError", [ jqXHR, s, isSuccess ? success : error ]), 
@@ -26800,7 +26741,7 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
                 var script, head = document.head || jQuery("head")[0] || document.documentElement;
                 return {
                     send: function(_, callback) {
-                        script = document.createElement("script"), script.async = !0, s.scriptCharset && (script.charset = s.scriptCharset), 
+                        (script = document.createElement("script")).async = !0, s.scriptCharset && (script.charset = s.scriptCharset), 
                         script.src = s.url, script.onload = script.onreadystatechange = function(_, isAbort) {
                             (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) && (script.onload = script.onreadystatechange = null, 
                             script.parentNode && script.parentNode.removeChild(script), script = null, isAbort || callback(200, "success"));
@@ -26863,10 +26804,9 @@ _gaq.push([ "_trackPageLoadTime" ]), _gaq.push([ "_gat._anonymizeIp" ]), functio
         var docElem = window.document.documentElement;
         jQuery.offset = {
             setOffset: function(elem, options, i) {
-                var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition, position = jQuery.css(elem, "position"), curElem = jQuery(elem), props = {};
+                var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, position = jQuery.css(elem, "position"), curElem = jQuery(elem), props = {};
                 "static" === position && (elem.style.position = "relative"), curOffset = curElem.offset(), 
-                curCSSTop = jQuery.css(elem, "top"), curCSSLeft = jQuery.css(elem, "left"), calculatePosition = ("absolute" === position || "fixed" === position) && jQuery.inArray("auto", [ curCSSTop, curCSSLeft ]) > -1, 
-                calculatePosition ? (curPosition = curElem.position(), curTop = curPosition.top, 
+                curCSSTop = jQuery.css(elem, "top"), curCSSLeft = jQuery.css(elem, "left"), ("absolute" === position || "fixed" === position) && jQuery.inArray("auto", [ curCSSTop, curCSSLeft ]) > -1 ? (curTop = (curPosition = curElem.position()).top, 
                 curLeft = curPosition.left) : (curTop = parseFloat(curCSSTop) || 0, curLeft = parseFloat(curCSSLeft) || 0), 
                 jQuery.isFunction(options) && (options = options.call(elem, i, curOffset)), null != options.top && (props.top = options.top - curOffset.top + curTop), 
                 null != options.left && (props.left = options.left - curOffset.left + curLeft), 
